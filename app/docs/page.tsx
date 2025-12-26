@@ -27,66 +27,24 @@ export default function DocsPage() {
                   <span className="flex-shrink-0 w-8 h-8 sketch-border-yellow flex items-center justify-center font-bold">1</span>
                   <div>
                     <p className="font-bold">upload a file</p>
-                    <p className="text-gray-600 text-sm">no wallet needed. just drag and drop.</p>
+                    <p className="text-gray-600 text-sm">drag and drop any file up to 50MB.</p>
                   </div>
                 </li>
                 <li className="flex gap-4">
                   <span className="flex-shrink-0 w-8 h-8 sketch-border-yellow flex items-center justify-center font-bold">2</span>
                   <div>
                     <p className="font-bold">get your link</p>
-                    <p className="text-gray-600 text-sm">permanent URL you can share anywhere.</p>
+                    <p className="text-gray-600 text-sm">short URL you can share anywhere.</p>
                   </div>
                 </li>
                 <li className="flex gap-4">
                   <span className="flex-shrink-0 w-8 h-8 sketch-border-yellow flex items-center justify-center font-bold">3</span>
                   <div>
-                    <p className="font-bold">connect wallet for more</p>
-                    <p className="text-gray-600 text-sm">unlock larger uploads and private files.</p>
+                    <p className="font-bold">mint as nft (optional)</p>
+                    <p className="text-gray-600 text-sm">0.01 SOL to own your file as an nft forever.</p>
                   </div>
                 </li>
               </ol>
-            </div>
-          </div>
-
-          {/* Storage Tiers */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-6 font-caveat">storage tiers</h2>
-            <div className="space-y-4">
-              <div className="sketch-border bg-white p-5">
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="font-bold">free tier</h3>
-                  <span className="text-gray-500 text-sm">no wallet required</span>
-                </div>
-                <ul className="space-y-1 text-gray-600 text-sm">
-                  <li>- 200MB total storage</li>
-                  <li>- 50MB max file size</li>
-                  <li>- public files only</li>
-                </ul>
-              </div>
-              
-              <div className="sketch-border-yellow p-5">
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="font-bold">holder tier</h3>
-                  <span className="text-sm">hold $FILE tokens</span>
-                </div>
-                <ul className="space-y-1 text-sm">
-                  <li>- 1GB total storage</li>
-                  <li>- 200MB max file size</li>
-                  <li>- private file support</li>
-                </ul>
-              </div>
-              
-              <div className="sketch-border bg-white p-5">
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="font-bold">whale tier</h3>
-                  <span className="text-gray-500 text-sm">major holder</span>
-                </div>
-                <ul className="space-y-1 text-gray-600 text-sm">
-                  <li>- 5GB total storage</li>
-                  <li>- 500MB max file size</li>
-                  <li>- priority support</li>
-                </ul>
-              </div>
             </div>
           </div>
 
@@ -95,63 +53,57 @@ export default function DocsPage() {
             <h2 className="text-3xl font-bold mb-6 font-caveat">features</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="sketch-border bg-white p-4">
-                <h3 className="font-bold mb-2">file upload</h3>
-                <p className="text-gray-600 text-sm">upload any file type. images, documents, videos, archives.</p>
+                <h3 className="font-bold mb-2">free uploads</h3>
+                <p className="text-gray-600 text-sm">upload any file up to 50MB completely free.</p>
               </div>
               <div className="sketch-border bg-white p-4">
-                <h3 className="font-bold mb-2">permanent links</h3>
-                <p className="text-gray-600 text-sm">every file gets a unique URL that doesn&apos;t expire.</p>
+                <h3 className="font-bold mb-2">short links</h3>
+                <p className="text-gray-600 text-sm">every file gets a short URL like /f/abc12345.</p>
               </div>
               <div className="sketch-border bg-white p-4">
-                <h3 className="font-bold mb-2">privacy control</h3>
-                <p className="text-gray-600 text-sm">toggle files between public and private (wallet required).</p>
+                <h3 className="font-bold mb-2">public or private</h3>
+                <p className="text-gray-600 text-sm">choose if your file shows in the explorer or not.</p>
+              </div>
+              <div className="sketch-border bg-white p-4">
+                <h3 className="font-bold mb-2">nft minting</h3>
+                <p className="text-gray-600 text-sm">mint your file as an nft for 0.01 SOL.</p>
+              </div>
+              <div className="sketch-border bg-white p-4">
+                <h3 className="font-bold mb-2">custom names</h3>
+                <p className="text-gray-600 text-sm">give your files custom display names.</p>
               </div>
               <div className="sketch-border bg-white p-4">
                 <h3 className="font-bold mb-2">file explorer</h3>
-                <p className="text-gray-600 text-sm">browse public files uploaded by the community.</p>
+                <p className="text-gray-600 text-sm">browse public files uploaded by everyone.</p>
               </div>
             </div>
           </div>
 
-          {/* API Reference */}
+          {/* NFT Minting */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-6 font-caveat">api reference</h2>
-            <div className="space-y-4">
-              <div className="sketch-border bg-white p-5">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="px-2 py-1 bg-green-100 border-2 border-black text-xs font-mono">POST</span>
-                  <code className="text-sm">/api/upload</code>
+            <h2 className="text-3xl font-bold mb-6 font-caveat">nft minting</h2>
+            <div className="sketch-border bg-white p-6 space-y-4">
+              <p className="text-gray-600">turn your uploaded file into an nft you own forever.</p>
+              <div className="space-y-3">
+                <div className="flex gap-3">
+                  <span className="text-[#b39700]">1.</span>
+                  <p>toggle "mint as nft" when uploading</p>
                 </div>
-                <p className="text-gray-600 text-sm mb-3">upload a file. wallet address is optional.</p>
-                <pre className="bg-gray-50 p-3 text-xs overflow-x-auto border-2 border-gray-200">
-{`FormData:
-  file: File (required)
-  walletAddress: string (optional)`}
-                </pre>
+                <div className="flex gap-3">
+                  <span className="text-[#b39700]">2.</span>
+                  <p>enter your solana wallet address</p>
+                </div>
+                <div className="flex gap-3">
+                  <span className="text-[#b39700]">3.</span>
+                  <p>send 0.01 SOL from that wallet to the payment address</p>
+                </div>
+                <div className="flex gap-3">
+                  <span className="text-[#b39700]">4.</span>
+                  <p>click "i sent the sol" and wait for minting</p>
+                </div>
               </div>
-              
-              <div className="sketch-border bg-white p-5">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="px-2 py-1 bg-blue-100 border-2 border-black text-xs font-mono">GET</span>
-                  <code className="text-sm">/api/files?wallet=ADDRESS</code>
-                </div>
-                <p className="text-gray-600 text-sm">get all files for a wallet address.</p>
-              </div>
-              
-              <div className="sketch-border bg-white p-5">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="px-2 py-1 bg-blue-100 border-2 border-black text-xs font-mono">GET</span>
-                  <code className="text-sm">/api/file/[id]</code>
-                </div>
-                <p className="text-gray-600 text-sm">get metadata for a specific file.</p>
-              </div>
-              
-              <div className="sketch-border bg-white p-5">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="px-2 py-1 bg-yellow-100 border-2 border-black text-xs font-mono">POST</span>
-                  <code className="text-sm">/api/update-public</code>
-                </div>
-                <p className="text-gray-600 text-sm">toggle file visibility (requires wallet ownership).</p>
+              <div className="bg-[#fff9e0] p-3 border-2 border-[#e6c200] rounded mt-4">
+                <p className="text-sm">the nft will be sent to the wallet you paid from. it includes your file as the image and links back to filecoin.</p>
               </div>
             </div>
           </div>
@@ -162,23 +114,19 @@ export default function DocsPage() {
             <div className="space-y-4">
               <div className="sketch-border bg-white p-4">
                 <h3 className="font-bold mb-2">what files can i upload?</h3>
-                <p className="text-gray-600 text-sm">any file type is supported - images, documents, videos, archives, etc.</p>
-              </div>
-              <div className="sketch-border bg-white p-4">
-                <h3 className="font-bold mb-2">is my data secure?</h3>
-                <p className="text-gray-600 text-sm">files are stored on supabase infrastructure. private files are only accessible to the wallet owner.</p>
-              </div>
-              <div className="sketch-border bg-white p-4">
-                <h3 className="font-bold mb-2">how do i get more storage?</h3>
-                <p className="text-gray-600 text-sm">connect your wallet and hold $FILE tokens. your tier updates automatically.</p>
-              </div>
-              <div className="sketch-border bg-white p-4">
-                <h3 className="font-bold mb-2">can i delete files?</h3>
-                <p className="text-gray-600 text-sm">yes, you can delete any file you own from your dashboard.</p>
+                <p className="text-gray-600 text-sm">any file type - images, documents, videos, audio, archives, etc.</p>
               </div>
               <div className="sketch-border bg-white p-4">
                 <h3 className="font-bold mb-2">do links expire?</h3>
-                <p className="text-gray-600 text-sm">no, file links are permanent as long as the file exists.</p>
+                <p className="text-gray-600 text-sm">no, file links are permanent.</p>
+              </div>
+              <div className="sketch-border bg-white p-4">
+                <h3 className="font-bold mb-2">why mint as nft?</h3>
+                <p className="text-gray-600 text-sm">proves ownership on the blockchain. the nft lives in your wallet forever.</p>
+              </div>
+              <div className="sketch-border bg-white p-4">
+                <h3 className="font-bold mb-2">what wallet do i need?</h3>
+                <p className="text-gray-600 text-sm">any solana wallet - phantom, solflare, backpack, etc.</p>
               </div>
             </div>
           </div>
