@@ -12,6 +12,10 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        caveat: ["var(--font-caveat)", "cursive"],
+        patrick: ["var(--font-patrick)", "cursive"],
+      },
     },
   },
   plugins: [],
