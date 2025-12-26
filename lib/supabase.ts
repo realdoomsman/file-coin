@@ -5,8 +5,8 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUB
   ? process.env.NEXT_PUBLIC_SUPABASE_URL
   : 'https://placeholder.supabase.co';
 
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY !== 'your_supabase_anon_key_here'
-  ? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON && process.env.NEXT_PUBLIC_SUPABASE_ANON !== 'your_supabase_anon_key_here'
+  ? process.env.NEXT_PUBLIC_SUPABASE_ANON
   : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsYWNlaG9sZGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDUxOTI4MDAsImV4cCI6MTk2MDc2ODgwMH0.M9FigBNGRnmRxWP4KhfJWpSjnBohzVPH_vR6Yt8ZR3g';
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
