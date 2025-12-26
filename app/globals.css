@@ -8,12 +8,31 @@
   --yellow: #e6c200;
   --yellow-dark: #b39700;
   --yellow-light: #fff176;
+  color-scheme: light;
+}
+
+/* Override any dark mode */
+html, body {
+  color-scheme: light !important;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--foreground) !important;
+  background: var(--background) !important;
+  background-color: #fffef5 !important;
   -webkit-font-smoothing: auto;
+}
+
+/* Force light background on html too */
+html {
+  background-color: #fffef5 !important;
+}
+
+/* Override wallet adapter dark styles */
+.wallet-adapter-modal-wrapper,
+.wallet-adapter-modal-container {
+  background-color: #fffef5 !important;
+  color: #1a1a1a !important;
 }
 
 /* Font classes */
@@ -48,11 +67,11 @@ body {
 
 /* Paper texture background */
 .paper-bg {
-  background-color: #fffef5;
+  background-color: #fffef5 !important;
   background-image: 
     linear-gradient(90deg, transparent 79px, #e8e4d9 79px, #e8e4d9 81px, transparent 81px),
-    linear-gradient(#e8e4d9 1px, transparent 1px);
-  background-size: 100% 24px;
+    linear-gradient(#e8e4d9 1px, transparent 1px) !important;
+  background-size: 100% 24px !important;
 }
 
 /* Wallet adapter button overrides */
