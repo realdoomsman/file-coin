@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
     const storageType = formData.get('storageType') as string || 'cloud';
     const txSignature = formData.get('txSignature') as string | null;
     const isPublic = formData.get('isPublic') !== 'false';
+    const customName = formData.get('customName') as string | null;
 
     if (!file) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
@@ -74,11 +75,12 @@ export async function POST(request: NextRequest) {
     const { data: urlData } = supabase.storage.from('files').getPublicUrl(fileName);
 
     // Save file metadata to database
+    const displayName = customName || file.name;
     const { data: fileRecord, error: fileError } = await supabase
       .from('files')
       .insert({
         owner_wallet: 'anonymous',
-        original_filename: file.name,
+        original_filename: displayName,
         size_bytes: file.size,
         storage_provider: storageType === 'onchain' ? 'solana' : 'supabase',
         url: urlData.publicUrl,

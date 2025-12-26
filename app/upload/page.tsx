@@ -18,6 +18,7 @@ export default function UploadPage() {
   const [isPublic, setIsPublic] = useState(true);
   const [mintAsNft, setMintAsNft] = useState(false);
   const [recipientWallet, setRecipientWallet] = useState('');
+  const [customName, setCustomName] = useState('');
   
   // Payment state for NFT
   const [showPayment, setShowPayment] = useState(false);
@@ -76,6 +77,9 @@ export default function UploadPage() {
       formData.append('file', file);
       formData.append('storageType', 'cloud');
       formData.append('isPublic', isPublic.toString());
+      if (customName.trim()) {
+        formData.append('customName', customName.trim());
+      }
 
       const progressInterval = setInterval(() => {
         setProgress(prev => Math.min(prev + 10, 90));
@@ -152,7 +156,7 @@ export default function UploadPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           fileUrl: uploadedFileData.url,
-          fileName: file.name,
+          fileName: customName.trim() || file.name,
           recipientWallet,
           shortId: uploadedFileData.shortId,
         }),
@@ -437,6 +441,21 @@ export default function UploadPage() {
                   </button>
                 )}
               </div>
+
+              {/* Custom Name */}
+              {!uploading && (
+                <div className="space-y-2">
+                  <p className="font-bold text-sm">name (optional)</p>
+                  <input
+                    type="text"
+                    value={customName}
+                    onChange={(e) => setCustomName(e.target.value)}
+                    placeholder={file.name}
+                    className="w-full border-2 border-black px-3 py-2 text-sm"
+                  />
+                  <p className="text-xs text-gray-500">leave blank to use original filename</p>
+                </div>
+              )}
 
               {/* Visibility Toggle */}
               {!uploading && (
