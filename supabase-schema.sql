@@ -16,18 +16,19 @@ CREATE TABLE IF NOT EXISTS files (
   owner_wallet TEXT NOT NULL,
   original_filename TEXT NOT NULL,
   size_bytes BIGINT NOT NULL,
-  storage_provider TEXT DEFAULT 'supabase' CHECK (storage_provider IN ('supabase', 'ipfs')),
+  storage_provider TEXT DEFAULT 'supabase' CHECK (storage_provider IN ('supabase', 'ipfs', 'solana')),
   url TEXT NOT NULL,
   cid TEXT,
   is_public BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP DEFAULT NOW(),
-  FOREIGN KEY (owner_wallet) REFERENCES users(wallet_address) ON DELETE CASCADE
+  short_id TEXT UNIQUE
 );
 
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_files_owner ON files(owner_wallet);
 CREATE INDEX IF NOT EXISTS idx_files_public ON files(is_public);
 CREATE INDEX IF NOT EXISTS idx_files_created ON files(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_files_short_id ON files(short_id);
 CREATE INDEX IF NOT EXISTS idx_users_wallet ON users(wallet_address);
 
 -- Enable Row Level Security (optional but recommended)

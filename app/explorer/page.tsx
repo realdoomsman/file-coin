@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { formatBytes, formatDate, shortenAddress } from '@/lib/utils';
+import { formatBytes, formatDate } from '@/lib/utils';
 import { FileRecord } from '@/lib/supabase';
 
 export default function ExplorerPage() {
@@ -95,7 +95,7 @@ export default function ExplorerPage() {
             {filteredFiles.map((file) => (
               <Link
                 key={file.id}
-                href={`/file/${file.id}`}
+                href={`/f/${file.short_id || file.id}`}
                 className="sketch-border bg-white p-4 hover:bg-gray-50 transition group"
               >
                 <div className="flex items-start gap-3">
@@ -113,9 +113,6 @@ export default function ExplorerPage() {
                       <span>-</span>
                       <span>{formatDate(file.created_at)}</span>
                     </div>
-                    <p className="text-xs text-gray-400 mt-1 font-mono">
-                      {shortenAddress(file.owner_wallet)}
-                    </p>
                   </div>
                 </div>
               </Link>

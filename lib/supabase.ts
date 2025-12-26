@@ -24,9 +24,10 @@ export type FileRecord = {
   owner_wallet: string;
   original_filename: string;
   size_bytes: number;
-  storage_provider: 'supabase' | 'ipfs';
+  storage_provider: 'supabase' | 'ipfs' | 'solana';
   url: string;
   cid?: string;
   is_public: boolean;
   created_at: string;
+  short_id?: string;
 };

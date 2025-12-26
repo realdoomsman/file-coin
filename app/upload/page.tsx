@@ -1,18 +1,17 @@
 'use client';
 
-import { useWallet } from '@solana/wallet-adapter-react';
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { formatBytes } from '@/lib/utils';
 
 export default function UploadPage() {
-  const { publicKey, connected } = useWallet();
   const router = useRouter();
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState('');
   const [isDragging, setIsDragging] = useState(false);
+  const [storageType, setStorageType] = useState<'cloud' | 'onchain'>('cloud');
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -50,10 +49,7 @@ export default function UploadPage() {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      
-      if (connected && publicKey) {
-        formData.append('walletAddress', publicKey.toBase58());
-      }
+      formData.append('storageType', storageType);
 
       const progressInterval = setInterval(() => {
         setProgress(prev => Math.min(prev + 10, 90));
@@ -73,7 +69,7 @@ export default function UploadPage() {
 
       setProgress(100);
       setTimeout(() => {
-        router.push(`/file/${data.id}`);
+        router.push(`/f/${data.shortId}`);
       }, 500);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Upload failed';
@@ -82,9 +78,6 @@ export default function UploadPage() {
     }
   };
 
-  const maxFileSize = connected ? '200MB' : '50MB';
-  const totalStorage = connected ? '1GB+' : '200MB';
-
   return (
     <main className="min-h-screen py-16">
       <div className="max-w-xl mx-auto px-6">
@@ -92,9 +85,7 @@ export default function UploadPage() {
         <div className="text-center mb-10">
           <h1 className="text-4xl font-bold mb-3 font-caveat">upload a file</h1>
           <p className="text-gray-600">
-            {connected 
-              ? 'connected - enjoying holder benefits' 
-              : 'no wallet needed. connect for more storage.'}
+            free file hosting. no account needed.
           </p>
         </div>
 
@@ -130,7 +121,7 @@ export default function UploadPage() {
                   or click to browse
                 </p>
                 <p className="text-sm text-gray-500">
-                  max {maxFileSize} per file / {totalStorage} total storage
+                  max 50MB per file
                 </p>
               </label>
             </div>
@@ -159,6 +150,38 @@ export default function UploadPage() {
                 )}
               </div>
 
+              {/* Storage Type Selection */}
+              {!uploading && (
+                <div className="space-y-3">
+                  <p className="font-bold text-sm">storage type</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      onClick={() => setStorageType('cloud')}
+                      className={`p-4 border-2 border-black text-left transition ${
+                        storageType === 'cloud' ? 'bg-[#fff9e0]' : 'bg-white hover:bg-gray-50'
+                      }`}
+                    >
+                      <p className="font-bold">cloud</p>
+                      <p className="text-sm text-gray-600">free, fast</p>
+                    </button>
+                    <button
+                      onClick={() => setStorageType('onchain')}
+                      className={`p-4 border-2 border-black text-left transition ${
+                        storageType === 'onchain' ? 'bg-[#fff9e0]' : 'bg-white hover:bg-gray-50'
+                      }`}
+                    >
+                      <p className="font-bold">on-chain</p>
+                      <p className="text-sm text-gray-600">permanent, costs sol</p>
+                    </button>
+                  </div>
+                  {storageType === 'onchain' && (
+                    <p className="text-sm text-gray-500">
+                      stores your file permanently on solana. costs ~0.01 SOL per KB.
+                    </p>
+                  )}
+                </div>
+              )}
+
               {/* Progress Bar */}
               {uploading && (
                 <div>
@@ -186,7 +209,7 @@ export default function UploadPage() {
               {!uploading && (
                 <div className="flex gap-3">
                   <button onClick={handleUpload} className="btn-sketch flex-1">
-                    upload
+                    {storageType === 'onchain' ? 'upload (coming soon)' : 'upload'}
                   </button>
                   <button onClick={() => setFile(null)} className="btn-outline">
                     cancel
@@ -206,22 +229,12 @@ export default function UploadPage() {
             </p>
           </div>
           <div className="sketch-border bg-white p-4">
-            <h3 className="font-bold mb-2">privacy</h3>
+            <h3 className="font-bold mb-2">on-chain storage</h3>
             <p className="text-gray-600 text-sm">
-              files are public by default. connect wallet for private uploads.
+              store files permanently on solana. they can never be deleted.
             </p>
           </div>
         </div>
-
-        {/* Wallet Prompt */}
-        {!connected && (
-          <div className="mt-8 sketch-border-yellow p-6 text-center">
-            <p className="font-bold mb-2">want more storage?</p>
-            <p className="text-sm">
-              connect your wallet and hold $FILE tokens for up to 5GB storage and 500MB file uploads.
-            </p>
-          </div>
-        )}
       </div>
     </main>
   );

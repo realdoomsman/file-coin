@@ -1,12 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useWallet } from '@solana/wallet-adapter-react';
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useState } from 'react';
 
 export default function Navbar() {
-  const { connected } = useWallet();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -27,18 +24,15 @@ export default function Navbar() {
             <Link href="/explorer" className="text-lg text-black hover:text-[#b39700] transition">
               explorer
             </Link>
-            {connected && (
-              <Link href="/app" className="text-lg text-black hover:text-[#b39700] transition">
-                dashboard
-              </Link>
-            )}
             <Link href="/docs" className="text-lg text-black hover:text-[#b39700] transition">
               docs
             </Link>
           </div>
 
           <div className="flex items-center gap-4">
-            <WalletMultiButton />
+            <Link href="/upload" className="btn-sketch hidden md:block">
+              upload
+            </Link>
             
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -61,7 +55,6 @@ export default function Navbar() {
               <Link href="/lore" className="text-lg" onClick={() => setMobileMenuOpen(false)}>story</Link>
               <Link href="/upload" className="text-lg" onClick={() => setMobileMenuOpen(false)}>upload</Link>
               <Link href="/explorer" className="text-lg" onClick={() => setMobileMenuOpen(false)}>explorer</Link>
-              {connected && <Link href="/app" className="text-lg" onClick={() => setMobileMenuOpen(false)}>dashboard</Link>}
               <Link href="/docs" className="text-lg" onClick={() => setMobileMenuOpen(false)}>docs</Link>
             </div>
           </div>
