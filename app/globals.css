@@ -2,94 +2,150 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Patrick+Hand&display=swap');
+
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
+  --background: #fffef5;
+  --foreground: #1a1a1a;
+  --yellow: #e6c200;
+  --yellow-dark: #b39700;
+  --yellow-light: #fff176;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Patrick Hand', cursive;
+  -webkit-font-smoothing: auto;
+}
+
+/* Sketchy hand-drawn border effect */
+.sketch-border {
+  border: 3px solid #1a1a1a;
+  border-radius: 2px 8px 2px 12px;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.15);
+}
+
+.sketch-border-yellow {
+  border: 3px solid #1a1a1a;
+  border-radius: 2px 8px 2px 12px;
+  background: var(--yellow);
+  box-shadow: 4px 4px 0 var(--yellow-dark);
+}
+
+/* Wobbly underline */
+.sketch-underline {
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-underline-offset: 4px;
+}
+
+/* Paper texture background */
+.paper-bg {
+  background-color: #fffef5;
+  background-image: 
+    linear-gradient(90deg, transparent 79px, #e8e4d9 79px, #e8e4d9 81px, transparent 81px),
+    linear-gradient(#e8e4d9 1px, transparent 1px);
+  background-size: 100% 24px;
 }
 
 /* Wallet adapter button overrides */
 .wallet-adapter-button {
-  background-color: rgb(147 51 234) !important;
-  border-radius: 0.5rem !important;
-  font-weight: 500 !important;
-  font-size: 0.875rem !important;
-  height: 2.5rem !important;
-  padding: 0 1rem !important;
+  background-color: var(--yellow) !important;
+  color: #1a1a1a !important;
+  border: 3px solid #1a1a1a !important;
+  border-radius: 2px 8px 2px 12px !important;
+  font-family: 'Patrick Hand', cursive !important;
+  font-size: 1.1rem !important;
+  font-weight: 400 !important;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.2) !important;
 }
 
 .wallet-adapter-button:hover {
-  background-color: rgb(126 34 206) !important;
-}
-
-.wallet-adapter-button-trigger {
-  background-color: rgb(147 51 234) !important;
+  background-color: var(--yellow-light) !important;
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.25) !important;
 }
 
 .wallet-adapter-dropdown-list {
-  background-color: rgb(17 17 17) !important;
-  border: 1px solid rgb(38 38 38) !important;
-  border-radius: 0.75rem !important;
+  background-color: #fffef5 !important;
+  border: 3px solid #1a1a1a !important;
+  border-radius: 2px 8px 2px 12px !important;
+  font-family: 'Patrick Hand', cursive !important;
 }
 
 .wallet-adapter-dropdown-list-item {
-  background-color: transparent !important;
+  color: #1a1a1a !important;
+  font-family: 'Patrick Hand', cursive !important;
 }
 
 .wallet-adapter-dropdown-list-item:hover {
-  background-color: rgb(38 38 38) !important;
+  background-color: var(--yellow-light) !important;
 }
 
 .wallet-adapter-modal-wrapper {
-  background-color: rgb(17 17 17) !important;
-  border: 1px solid rgb(38 38 38) !important;
-  border-radius: 1rem !important;
-}
-
-.wallet-adapter-modal-button-close {
-  background-color: rgb(38 38 38) !important;
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgb(38 38 38);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(64 64 64);
+  background-color: #fffef5 !important;
+  border: 3px solid #1a1a1a !important;
+  font-family: 'Patrick Hand', cursive !important;
 }
 
 /* Selection */
 ::selection {
-  background-color: rgb(147 51 234 / 0.3);
+  background-color: var(--yellow);
 }
 
-/* Focus styles */
-*:focus-visible {
-  outline: 2px solid rgb(147 51 234);
-  outline-offset: 2px;
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
 }
 
-/* Prose overrides for dark mode */
-.prose-invert {
-  --tw-prose-body: rgb(209 213 219);
-  --tw-prose-headings: rgb(255 255 255);
-  --tw-prose-links: rgb(167 139 250);
-  --tw-prose-bold: rgb(255 255 255);
+::-webkit-scrollbar-track {
+  background: #fffef5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--yellow);
+  border: 2px solid #1a1a1a;
+  border-radius: 2px;
+}
+
+/* Sketchy button */
+.btn-sketch {
+  background: var(--yellow);
+  color: #1a1a1a;
+  border: 3px solid #1a1a1a;
+  border-radius: 2px 8px 2px 12px;
+  box-shadow: 4px 4px 0 var(--yellow-dark);
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.2rem;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.1s;
+}
+
+.btn-sketch:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--yellow-dark);
+}
+
+.btn-sketch:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--yellow-dark);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #1a1a1a;
+  border: 3px solid #1a1a1a;
+  border-radius: 2px 8px 2px 12px;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.2rem;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.1s;
+}
+
+.btn-outline:hover {
+  background: #f5f5f0;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(0,0,0,0.15);
 }
