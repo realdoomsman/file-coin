@@ -52,7 +52,7 @@ export default function Navbar() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t-2 border-black">
             <div className="flex flex-col gap-4">
-              <Link href="/lore" className="text-lg" onClick={() => setMobileMenuOpen(false)}>story</Link>
+              <Link href="/lore" className="text-lg" onClick={() => setMobileMenuOpen(false)}>lore</Link>
               <Link href="/upload" className="text-lg" onClick={() => setMobileMenuOpen(false)}>upload</Link>
               <Link href="/explorer" className="text-lg" onClick={() => setMobileMenuOpen(false)}>explorer</Link>
               <Link href="/docs" className="text-lg" onClick={() => setMobileMenuOpen(false)}>docs</Link>
