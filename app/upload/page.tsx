@@ -116,13 +116,13 @@ export default function UploadPage() {
     setError('');
 
     try {
-      // Check for payment
+      // Check for payment from the recipient wallet
       const checkResponse = await fetch('/api/check-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          paymentId: 'nft-mint',
           expectedAmount: MINT_PRICE,
+          senderWallet: recipientWallet,
         }),
       });
 
@@ -130,7 +130,7 @@ export default function UploadPage() {
 
       if (!checkData.confirmed) {
         setPaymentStatus('pending');
-        setError('Payment not found. Send exactly ' + MINT_PRICE + ' SOL and try again.');
+        setError('Payment not found. Make sure you sent from the wallet address you entered.');
         return;
       }
 
@@ -250,7 +250,7 @@ export default function UploadPage() {
               </div>
 
               <div>
-                <p className="text-sm text-gray-500 mb-2">send SOL to:</p>
+                <p className="text-sm text-gray-500 mb-2">send {MINT_PRICE} SOL from your wallet to:</p>
                 <div className="flex gap-2">
                   <input
                     type="text"
@@ -265,10 +265,13 @@ export default function UploadPage() {
                     {copied ? 'copied' : 'copy'}
                   </button>
                 </div>
+                <p className="text-xs text-gray-400 mt-2">
+                  send from: <span className="font-mono">{recipientWallet.slice(0, 8)}...{recipientWallet.slice(-8)}</span>
+                </p>
               </div>
 
-              <div className="bg-gray-50 p-3 border-2 border-gray-200 rounded">
-                <p className="text-xs text-gray-500 mb-1">nft will be sent to</p>
+              <div className="bg-[#e8f5e9] p-3 border-2 border-green-300 rounded">
+                <p className="text-xs text-gray-600 mb-1">nft will be sent to the wallet you pay from</p>
                 <p className="font-mono text-sm break-all">{recipientWallet}</p>
               </div>
 

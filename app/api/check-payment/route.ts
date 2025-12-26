@@ -6,12 +6,19 @@ const PAYMENT_WALLET = process.env.NEXT_PUBLIC_PAYMENT_WALLET || '';
 
 export async function POST(request: NextRequest) {
   try {
-    const { expectedAmount } = await request.json();
+    const { expectedAmount, senderWallet } = await request.json();
 
     if (!PAYMENT_WALLET) {
       return NextResponse.json({ 
         confirmed: false, 
         error: 'Payment wallet not configured' 
+      });
+    }
+
+    if (!senderWallet) {
+      return NextResponse.json({ 
+        confirmed: false, 
+        error: 'Sender wallet required' 
       });
     }
 
@@ -82,33 +89,49 @@ export async function POST(request: NextRequest) {
 
       if (!tx || !tx.meta || tx.meta.err) continue;
 
-      // Check the transfer amount to our wallet
+      // Check the transfer amount to our wallet AND verify sender
       const preBalances = tx.meta.preBalances || [];
       const postBalances = tx.meta.postBalances || [];
       const accountKeys = tx.transaction?.message?.accountKeys || [];
 
+      let receivedAmount = 0;
+      let correctSender = false;
+
       for (let i = 0; i < accountKeys.length; i++) {
         const pubkey = accountKeys[i].pubkey || accountKeys[i];
+        
+        // Check if our wallet received SOL
         if (pubkey === PAYMENT_WALLET) {
-          const received = (postBalances[i] - preBalances[i]) / 1e9; // Convert lamports to SOL
-          
-          // Check if amount matches (with 5% tolerance)
-          if (received >= expectedAmount * 0.95) {
-            // Mark this transaction as used
-            await supabase
-              .from('used_payments')
-              .insert({ 
-                tx_signature: sig.signature,
-                amount: received,
-              });
-
-            return NextResponse.json({
-              confirmed: true,
-              txSignature: sig.signature,
-              amount: received,
-            });
+          const received = (postBalances[i] - preBalances[i]) / 1e9;
+          if (received > 0) {
+            receivedAmount = received;
           }
         }
+        
+        // Check if the sender is the claimed wallet (they sent SOL, so balance decreased)
+        if (pubkey === senderWallet) {
+          const sent = (preBalances[i] - postBalances[i]) / 1e9;
+          if (sent > 0) {
+            correctSender = true;
+          }
+        }
+      }
+
+      // Verify both: correct amount AND correct sender
+      if (receivedAmount >= expectedAmount * 0.95 && correctSender) {
+        // Mark this transaction as used
+        await supabase
+          .from('used_payments')
+          .insert({ 
+            tx_signature: sig.signature,
+            amount: receivedAmount,
+          });
+
+        return NextResponse.json({
+          confirmed: true,
+          txSignature: sig.signature,
+          amount: receivedAmount,
+        });
       }
     }
 
