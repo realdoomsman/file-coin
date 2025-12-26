@@ -1,13 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import { getTokenBalance, getTierFromBalance, getStorageLimits } from '@/lib/solana';
-import { v4 as uuidv4 } from 'uuid';
 
 // Anonymous user storage limits
 const ANON_LIMITS = {
   perFile: 50 * 1024 * 1024, // 50MB
   total: 200 * 1024 * 1024,  // 200MB
 };
+
+// Generate a simple unique ID without external dependencies
+function generateId(): string {
+  return `${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 10)}`;
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -57,13 +61,13 @@ export async function POST(request: NextRequest) {
       // Check total storage limit for wallet users
       if (user.total_storage_used + file.size > limits.total) {
         return NextResponse.json(
-          { error: `Storage limit exceeded. Hold more $FILE tokens to upgrade.` },
+          { error: 'Storage limit exceeded. Hold more $FILE tokens to upgrade.' },
           { status: 400 }
         );
       }
     } else {
       // Anonymous upload - generate a unique identifier
-      ownerIdentifier = `anon_${uuidv4()}`;
+      ownerIdentifier = `anon_${generateId()}`;
     }
 
     // Check file size limits
@@ -77,7 +81,7 @@ export async function POST(request: NextRequest) {
 
     // Upload file to Supabase Storage
     const fileExt = file.name.split('.').pop() || 'bin';
-    const fileName = `${ownerIdentifier}/${Date.now()}_${uuidv4().slice(0, 8)}.${fileExt}`;
+    const fileName = `${ownerIdentifier}/${Date.now()}_${generateId()}.${fileExt}`;
     const fileBuffer = await file.arrayBuffer();
 
     const { error: uploadError } = await supabase.storage
