@@ -1,153 +1,200 @@
+import Link from 'next/link';
+
 export default function DocsPage() {
   return (
-    <main className="min-h-screen max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-      <div className="text-center mb-12">
-        <h1 className="text-6xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
-          📖 THE DOCS 📖
-        </h1>
-        <p className="text-xl text-gray-400">rtfm (read the funny manual)</p>
-        <p className="text-sm text-yellow-400 mt-2">⚠️ yes u actually have to read this ⚠️</p>
-      </div>
+    <main className="min-h-screen">
+      {/* Hero */}
+      <section className="py-24 border-b border-gray-900">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <p className="text-purple-400 text-sm tracking-[0.2em] uppercase mb-4">Documentation</p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">How It Works</h1>
+          <p className="text-xl text-gray-400">
+            Everything you need to know about using $FILECOIN.
+          </p>
+        </div>
+      </section>
 
-      <div className="space-y-12">
-        <section>
-          <h2 className="text-3xl font-bold mb-4 text-yellow-400">🚀 HOW 2 USE 🚀</h2>
-          <div className="bg-gradient-to-br from-purple-900/30 to-gray-900 p-6 rounded-lg border-2 border-purple-500">
-            <ol className="list-decimal list-inside space-y-3 text-gray-300 text-lg">
-              <li>connect ur solana wallet (phantom, solflare, whatever)</li>
-              <li>go to the dashboard (click the button lol)</li>
-              <li>click &quot;UPLOAD FILE&quot; and yeet ur file into the void</li>
-              <li>profit??? (not financial advice)</li>
-            </ol>
-            <p className="text-sm text-gray-500 mt-4 italic">
-              * if this doesn&apos;t work idk what to tell u, it works on my machine
-            </p>
+      {/* Content */}
+      <section className="py-16">
+        <div className="max-w-3xl mx-auto px-6">
+          
+          {/* Quick Start */}
+          <div className="mb-16">
+            <h2 className="text-2xl font-bold mb-6">Quick Start</h2>
+            <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+              <ol className="space-y-4">
+                <li className="flex gap-4">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-medium">1</span>
+                  <div>
+                    <p className="font-medium text-white">Upload a file</p>
+                    <p className="text-gray-500 text-sm">No wallet needed. Just drag and drop.</p>
+                  </div>
+                </li>
+                <li className="flex gap-4">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-medium">2</span>
+                  <div>
+                    <p className="font-medium text-white">Get your link</p>
+                    <p className="text-gray-500 text-sm">Permanent URL you can share anywhere.</p>
+                  </div>
+                </li>
+                <li className="flex gap-4">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-medium">3</span>
+                  <div>
+                    <p className="font-medium text-white">Connect wallet for more</p>
+                    <p className="text-gray-500 text-sm">Unlock larger uploads and private files.</p>
+                  </div>
+                </li>
+              </ol>
+            </div>
           </div>
-        </section>
 
-        <section>
-          <h2 className="text-3xl font-bold mb-4 text-green-400">💾 STORAGE TIERS 💾</h2>
-          <div className="bg-gradient-to-br from-green-900/30 to-gray-900 p-6 rounded-lg border-2 border-green-500">
+          {/* Storage Tiers */}
+          <div className="mb-16">
+            <h2 className="text-2xl font-bold mb-6">Storage Tiers</h2>
             <div className="space-y-4">
-              <div>
-                <h3 className="text-xl font-bold text-gray-200 mb-2">🆓 broke boi tier</h3>
-                <ul className="list-disc list-inside text-gray-300 space-y-1">
-                  <li>200MB total (like 3 memes)</li>
-                  <li>50MB per file</li>
-                  <li>Requirements: just show up lol</li>
+              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+                <div className="flex justify-between items-start mb-3">
+                  <h3 className="font-semibold text-white">Free Tier</h3>
+                  <span className="text-gray-500 text-sm">No wallet required</span>
+                </div>
+                <ul className="space-y-2 text-gray-400 text-sm">
+                  <li>• 200MB total storage</li>
+                  <li>• 50MB max file size</li>
+                  <li>• Public files only</li>
                 </ul>
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-purple-400 mb-2">💰 holder tier (u got some)</h3>
-                <ul className="list-disc list-inside text-gray-300 space-y-1">
-                  <li>1GB total (now we talkin)</li>
-                  <li>200MB per file</li>
-                  <li>Requirements: hold some $FILE tokens</li>
+              
+              <div className="bg-gray-900/50 border border-purple-500/30 rounded-xl p-6">
+                <div className="flex justify-between items-start mb-3">
+                  <h3 className="font-semibold text-purple-400">Holder Tier</h3>
+                  <span className="text-gray-500 text-sm">Hold $FILE tokens</span>
+                </div>
+                <ul className="space-y-2 text-gray-400 text-sm">
+                  <li>• 1GB total storage</li>
+                  <li>• 200MB max file size</li>
+                  <li>• Private file support</li>
                 </ul>
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-pink-400 mb-2">🐋 WHALE MODE ACTIVATED</h3>
-                <ul className="list-disc list-inside text-gray-300 space-y-1">
-                  <li>5GB total (absolute unit)</li>
-                  <li>500MB per file (chonky)</li>
-                  <li>Requirements: bag holder status 💼</li>
+              
+              <div className="bg-gray-900/50 border border-yellow-500/30 rounded-xl p-6">
+                <div className="flex justify-between items-start mb-3">
+                  <h3 className="font-semibold text-yellow-500">Whale Tier</h3>
+                  <span className="text-gray-500 text-sm">Major holder</span>
+                </div>
+                <ul className="space-y-2 text-gray-400 text-sm">
+                  <li>• 5GB total storage</li>
+                  <li>• 500MB max file size</li>
+                  <li>• Priority support</li>
                 </ul>
               </div>
             </div>
-            <p className="text-xs text-gray-500 mt-4 italic">
-              * tiers update when u connect wallet. no cap.
-            </p>
           </div>
-        </section>
 
-        <section>
-          <h2 className="text-3xl font-bold mb-4 text-blue-400">✨ STUFF U CAN DO ✨</h2>
-          <div className="bg-gradient-to-br from-blue-900/30 to-gray-900 p-6 rounded-lg border-2 border-blue-500">
-            <ul className="space-y-3 text-gray-300">
-              <li><span className="font-bold text-yellow-400">📤 yeet files:</span> upload literally anything (within reason)</li>
-              <li><span className="font-bold text-yellow-400">🔒 public/private:</span> share with the world or keep it secret</li>
-              <li><span className="font-bold text-yellow-400">🔗 direct links:</span> permanent urls that actually work</li>
-              <li><span className="font-bold text-yellow-400">🗂️ file explorer:</span> snoop on other ppls public files</li>
-              <li><span className="font-bold text-yellow-400">📊 dashboard:</span> see how much space ur wasting</li>
-            </ul>
+          {/* Features */}
+          <div className="mb-16">
+            <h2 className="text-2xl font-bold mb-6">Features</h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="bg-gray-900/30 border border-gray-800 rounded-lg p-5">
+                <h3 className="font-medium text-white mb-2">File Upload</h3>
+                <p className="text-gray-500 text-sm">Upload any file type. Images, documents, videos, archives.</p>
+              </div>
+              <div className="bg-gray-900/30 border border-gray-800 rounded-lg p-5">
+                <h3 className="font-medium text-white mb-2">Permanent Links</h3>
+                <p className="text-gray-500 text-sm">Every file gets a unique URL that doesn&apos;t expire.</p>
+              </div>
+              <div className="bg-gray-900/30 border border-gray-800 rounded-lg p-5">
+                <h3 className="font-medium text-white mb-2">Privacy Control</h3>
+                <p className="text-gray-500 text-sm">Toggle files between public and private (wallet required).</p>
+              </div>
+              <div className="bg-gray-900/30 border border-gray-800 rounded-lg p-5">
+                <h3 className="font-medium text-white mb-2">File Explorer</h3>
+                <p className="text-gray-500 text-sm">Browse public files uploaded by the community.</p>
+              </div>
+            </div>
           </div>
-        </section>
 
-        <section>
-          <h2 className="text-3xl font-bold mb-4 text-orange-400">🪙 THE TOKEN THING 🪙</h2>
-          <div className="bg-gradient-to-br from-orange-900/30 to-gray-900 p-6 rounded-lg border-2 border-orange-500">
-            <p className="text-gray-300 mb-4">
-              ok so basically we check ur wallet for $FILE tokens and give u more storage if u have some. 
-              it&apos;s literally that simple. more tokens = more space. capitalism baby 📈
-            </p>
-            <p className="text-gray-300">
-              we check every time u connect ur wallet so u can upgrade whenever. just buy tokens and refresh. 
-              ez clap.
-            </p>
-          </div>
-        </section>
-
-        <section>
-          <h2 className="text-3xl font-bold mb-4 text-purple-400">🤓 API STUFF (for nerds) 🤓</h2>
-          <div className="bg-gradient-to-br from-purple-900/30 to-gray-900 p-6 rounded-lg border-2 border-purple-500">
-            <p className="text-sm text-gray-400 mb-4">if u wanna build on top of this or whatever here u go</p>
+          {/* API Reference */}
+          <div className="mb-16">
+            <h2 className="text-2xl font-bold mb-6">API Reference</h2>
             <div className="space-y-4">
-              <div>
-                <h3 className="text-lg font-bold text-yellow-400 mb-2">POST /api/upload</h3>
-                <p className="text-gray-400 text-sm mb-2">yeet a file into the cloud</p>
-                <pre className="bg-black p-3 rounded text-sm text-gray-300 overflow-x-auto">
-{`{
-  "file": File,
-  "walletAddress": "string"
-}`}
+              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs font-mono rounded">POST</span>
+                  <code className="text-gray-300 text-sm">/api/upload</code>
+                </div>
+                <p className="text-gray-500 text-sm mb-3">Upload a file. Wallet address is optional.</p>
+                <pre className="bg-black/50 p-3 rounded text-xs text-gray-400 overflow-x-auto">
+{`FormData:
+  file: File (required)
+  walletAddress: string (optional)`}
                 </pre>
               </div>
-              <div>
-                <h3 className="text-lg font-bold text-yellow-400 mb-2">GET /api/files</h3>
-                <p className="text-gray-400 text-sm">get all ur files (or someone elses if u know their wallet)</p>
+              
+              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs font-mono rounded">GET</span>
+                  <code className="text-gray-300 text-sm">/api/files?wallet=ADDRESS</code>
+                </div>
+                <p className="text-gray-500 text-sm">Get all files for a wallet address.</p>
               </div>
-              <div>
-                <h3 className="text-lg font-bold text-yellow-400 mb-2">GET /api/file/[id]</h3>
-                <p className="text-gray-400 text-sm">get info about one specific file</p>
+              
+              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs font-mono rounded">GET</span>
+                  <code className="text-gray-300 text-sm">/api/file/[id]</code>
+                </div>
+                <p className="text-gray-500 text-sm">Get metadata for a specific file.</p>
               </div>
-              <div>
-                <h3 className="text-lg font-bold text-yellow-400 mb-2">POST /api/update-public</h3>
-                <p className="text-gray-400 text-sm">make ur file public or private (toggle switch go brrr)</p>
+              
+              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs font-mono rounded">POST</span>
+                  <code className="text-gray-300 text-sm">/api/update-public</code>
+                </div>
+                <p className="text-gray-500 text-sm">Toggle file visibility (requires wallet ownership).</p>
               </div>
             </div>
           </div>
-        </section>
 
-        <section>
-          <h2 className="text-3xl font-bold mb-4 text-pink-400">❓ FAQ (frequently asked questions) ❓</h2>
-          <div className="bg-gradient-to-br from-pink-900/30 to-gray-900 p-6 rounded-lg border-2 border-pink-500 space-y-4">
-            <div>
-              <h3 className="font-bold text-yellow-400 mb-2">is my data safe???</h3>
-              <p className="text-gray-300">probably. we use supabase. they seem legit. don&apos;t upload ur seed phrase tho.</p>
-            </div>
-            <div>
-              <h3 className="font-bold text-yellow-400 mb-2">what files can i upload?</h3>
-              <p className="text-gray-300">literally anything. jpegs, pdfs, ur tax returns, whatever. we don&apos;t judge.</p>
-            </div>
-            <div>
-              <h3 className="font-bold text-yellow-400 mb-2">can i delete stuff?</h3>
-              <p className="text-gray-300">yeah just click delete lmao. it&apos;s not that deep.</p>
-            </div>
-            <div>
-              <h3 className="font-bold text-yellow-400 mb-2">how do i get more storage?</h3>
-              <p className="text-gray-300">buy $FILE tokens. it&apos;s literally pay 2 win. we&apos;re not even hiding it.</p>
-            </div>
-            <div>
-              <h3 className="font-bold text-yellow-400 mb-2">is this a scam?</h3>
-              <p className="text-gray-300">no??? it actually works??? we&apos;re confused too tbh.</p>
-            </div>
-            <div>
-              <h3 className="font-bold text-yellow-400 mb-2">wen moon?</h3>
-              <p className="text-gray-300">soon™ (not financial advice)</p>
+          {/* FAQ */}
+          <div className="mb-16">
+            <h2 className="text-2xl font-bold mb-6">FAQ</h2>
+            <div className="space-y-4">
+              <div className="bg-gray-900/30 border border-gray-800 rounded-lg p-5">
+                <h3 className="font-medium text-white mb-2">What files can I upload?</h3>
+                <p className="text-gray-500 text-sm">Any file type is supported — images, documents, videos, archives, etc.</p>
+              </div>
+              <div className="bg-gray-900/30 border border-gray-800 rounded-lg p-5">
+                <h3 className="font-medium text-white mb-2">Is my data secure?</h3>
+                <p className="text-gray-500 text-sm">Files are stored on Supabase infrastructure. Private files are only accessible to the wallet owner.</p>
+              </div>
+              <div className="bg-gray-900/30 border border-gray-800 rounded-lg p-5">
+                <h3 className="font-medium text-white mb-2">How do I get more storage?</h3>
+                <p className="text-gray-500 text-sm">Connect your wallet and hold $FILE tokens. Your tier updates automatically.</p>
+              </div>
+              <div className="bg-gray-900/30 border border-gray-800 rounded-lg p-5">
+                <h3 className="font-medium text-white mb-2">Can I delete files?</h3>
+                <p className="text-gray-500 text-sm">Yes, you can delete any file you own from your dashboard.</p>
+              </div>
+              <div className="bg-gray-900/30 border border-gray-800 rounded-lg p-5">
+                <h3 className="font-medium text-white mb-2">Do links expire?</h3>
+                <p className="text-gray-500 text-sm">No, file links are permanent as long as the file exists.</p>
+              </div>
             </div>
           </div>
-        </section>
-      </div>
+
+          {/* CTA */}
+          <div className="text-center pt-8 border-t border-gray-800">
+            <p className="text-gray-400 mb-6">Ready to get started?</p>
+            <Link
+              href="/upload"
+              className="inline-block px-8 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-medium transition"
+            >
+              Upload Your First File
+            </Link>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

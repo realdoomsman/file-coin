@@ -190,4 +190,4 @@ If you want to create an actual SPL token:
 
 ---
 
-Need help? The app is fully functional out of the box - just follow these steps!
+Need help? The app is fully functional out of the box - just follow these step

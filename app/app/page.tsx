@@ -17,6 +17,8 @@ export default function AppPage() {
   useEffect(() => {
     if (connected && publicKey) {
       fetchUserData();
+    } else {
+      setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connected, publicKey]);
@@ -38,7 +40,7 @@ export default function AppPage() {
   };
 
   const deleteFile = async (fileId: string) => {
-    if (!confirm('Are you sure you want to delete this file?')) return;
+    if (!confirm('Delete this file?')) return;
     
     try {
       await fetch(`/api/file/${fileId}`, { method: 'DELETE' });
@@ -51,13 +53,18 @@ export default function AppPage() {
   if (!connected) {
     return (
       <main className="min-h-screen flex items-center justify-center">
-        <div className="text-center max-w-md mx-auto p-8">
-          <div className="text-6xl mb-6 animate-spin">🔒🤡🔒</div>
-          <h1 className="text-4xl font-bold mb-4 text-red-400">NGMI</h1>
-          <p className="text-xl text-gray-300 mb-4">u gotta connect ur wallet first anon</p>
-          <p className="text-gray-400">click that button up there 👆</p>
-          <p className="text-sm text-yellow-400 mt-6">
-            (this is literally a web3 app, what did u expect???)
+        <div className="text-center max-w-md mx-auto px-6">
+          <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
+            <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <h1 className="text-2xl font-bold mb-3">Connect Your Wallet</h1>
+          <p className="text-gray-400 mb-6">
+            Connect your wallet to view your dashboard and manage your files.
+          </p>
+          <p className="text-gray-500 text-sm">
+            You can still <Link href="/upload" className="text-purple-400 hover:text-purple-300">upload files</Link> without connecting.
           </p>
         </div>
       </main>
@@ -67,155 +74,164 @@ export default function AppPage() {
   const storagePercentage = (storageUsed / storageLimit) * 100;
 
   return (
-    <main className="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="mb-8">
-        <h1 className="text-5xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
-          💎 UR DASHBOARD 💎
-        </h1>
-        <p className="text-gray-400 text-lg">
-          gm {shortenAddress(publicKey?.toBase58() || '')} 🫡
-        </p>
-        <p className="text-sm text-yellow-400 mt-1">
-          (yes ur actually connected, crazy right?)
-        </p>
-      </div>
-
-      {/* Storage Usage Card */}
-      <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 p-6 rounded-lg border-2 border-purple-500 mb-8">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-yellow-400">📊 UR STORAGE 📊</h2>
-          <span className={`px-4 py-2 rounded-full text-sm font-bold animate-pulse ${
-            tier === 'whale' ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-black' :
-            tier === 'holder' ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' :
-            'bg-gray-800 text-gray-400'
-          }`}>
-            {tier === 'whale' ? '🐋 WHALE 🐋' : tier === 'holder' ? '😎 HOLDER 😎' : '😐 BROKE 😐'}
-          </span>
+    <main className="min-h-screen py-12">
+      <div className="max-w-5xl mx-auto px-6">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
+          <p className="text-gray-500">
+            {shortenAddress(publicKey?.toBase58() || '')}
+          </p>
         </div>
-        <div className="mb-2">
-          <div className="flex justify-between text-sm text-gray-400 mb-1">
-            <span>{formatBytes(storageUsed)} used</span>
-            <span>{formatBytes(storageLimit)} total</span>
+
+        {/* Stats Grid */}
+        <div className="grid sm:grid-cols-3 gap-4 mb-8">
+          {/* Storage Card */}
+          <div className="sm:col-span-2 bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <p className="text-gray-500 text-sm mb-1">Storage Used</p>
+                <p className="text-2xl font-bold">{formatBytes(storageUsed)}</p>
+              </div>
+              <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                tier === 'whale' ? 'bg-yellow-500/20 text-yellow-400' :
+                tier === 'holder' ? 'bg-purple-500/20 text-purple-400' :
+                'bg-gray-800 text-gray-400'
+              }`}>
+                {tier === 'whale' ? 'Whale' : tier === 'holder' ? 'Holder' : 'Free'}
+              </span>
+            </div>
+            <div className="mb-2">
+              <div className="w-full bg-gray-800 rounded-full h-2">
+                <div
+                  className={`h-2 rounded-full transition-all ${
+                    storagePercentage > 90 ? 'bg-red-500' :
+                    storagePercentage > 70 ? 'bg-yellow-500' :
+                    'bg-purple-500'
+                  }`}
+                  style={{ width: `${Math.min(storagePercentage, 100)}%` }}
+                />
+              </div>
+            </div>
+            <p className="text-gray-500 text-sm">
+              {formatBytes(storageLimit - storageUsed)} remaining of {formatBytes(storageLimit)}
+            </p>
           </div>
-          <div className="w-full bg-gray-800 rounded-full h-4">
-            <div
-              className={`h-4 rounded-full transition-all ${
-                storagePercentage > 90 ? 'bg-red-600' :
-                storagePercentage > 70 ? 'bg-yellow-600' :
-                'bg-purple-600'
-              }`}
-              style={{ width: `${Math.min(storagePercentage, 100)}%` }}
-            />
+
+          {/* Files Count */}
+          <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+            <p className="text-gray-500 text-sm mb-1">Total Files</p>
+            <p className="text-2xl font-bold">{files.length}</p>
           </div>
         </div>
-        <p className="text-sm text-gray-300 mt-4 font-semibold">
-          {tier === 'free' && '💸 buy some $FILE tokens to upgrade ur tier (pay 2 win baby)'}
-          {tier === 'holder' && '😎 respectable. u got the holder tier. not bad anon.'}
-          {tier === 'whale' && '🐋 GIGACHAD DETECTED. MAXIMUM STORAGE UNLOCKED. WAGMI.'}
-        </p>
-      </div>
 
-      {/* Actions */}
-      <div className="flex flex-wrap gap-4 mb-8">
-        <Link
-          href="/upload"
-          className="px-8 py-4 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 rounded-lg font-bold text-lg transition transform hover:scale-105"
-        >
-          🚀 UPLOAD FILE 🚀
-        </Link>
-        <Link
-          href="/explorer"
-          className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-lg font-bold text-lg transition transform hover:scale-105"
-        >
-          👀 SPY ON OTHERS 👀
-        </Link>
-        <Link
-          href="/settings"
-          className="px-8 py-4 border-2 border-yellow-500 hover:bg-yellow-500 hover:text-black rounded-lg font-bold text-lg transition"
-        >
-          ⚙️ SETTINGS
-        </Link>
-      </div>
-
-      {/* Files Table */}
-      <div className="bg-gradient-to-br from-gray-900 to-purple-900/20 rounded-lg border-2 border-purple-500 overflow-hidden">
-        <div className="p-6 border-b-2 border-purple-500 bg-black/50">
-          <h2 className="text-3xl font-bold text-yellow-400">📁 UR FILES 📁</h2>
-          <p className="text-sm text-gray-400 mt-1">(the stuff u uploaded)</p>
+        {/* Quick Actions */}
+        <div className="flex flex-wrap gap-3 mb-8">
+          <Link
+            href="/upload"
+            className="px-5 py-2.5 bg-purple-600 hover:bg-purple-700 rounded-lg font-medium transition"
+          >
+            Upload File
+          </Link>
+          <Link
+            href="/explorer"
+            className="px-5 py-2.5 border border-gray-700 hover:border-gray-600 rounded-lg font-medium transition"
+          >
+            Explorer
+          </Link>
+          <Link
+            href="/settings"
+            className="px-5 py-2.5 border border-gray-700 hover:border-gray-600 rounded-lg font-medium transition"
+          >
+            Settings
+          </Link>
         </div>
-        
-        {loading ? (
-          <div className="p-12 text-center">
-            <div className="text-6xl mb-4 animate-spin">⏳</div>
-            <p className="text-gray-400 text-xl">loading ur stuff...</p>
+
+        {/* Files Table */}
+        <div className="bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-800">
+            <h2 className="font-semibold">Your Files</h2>
           </div>
-        ) : files.length === 0 ? (
-          <div className="p-12 text-center">
-            <div className="text-6xl mb-4">📁❌</div>
-            <p className="text-2xl text-gray-300 mb-2 font-bold">bruh u got no files</p>
-            <p className="text-gray-400 mb-6">upload something already</p>
-            <Link
-              href="/upload"
-              className="inline-block px-8 py-4 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 rounded-lg font-bold text-lg transition transform hover:scale-105"
-            >
-              🚀 UPLOAD UR FIRST FILE 🚀
-            </Link>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-800">
-                <tr>
-                  <th className="px-6 py-3 text-left text-sm font-semibold">Name</th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold">Size</th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold">Date</th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold">Visibility</th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-800">
-                {files.map((file) => (
-                  <tr key={file.id} className="hover:bg-gray-800/50">
-                    <td className="px-6 py-4">
-                      <Link href={`/file/${file.id}`} className="text-purple-400 hover:text-purple-300">
-                        {file.original_filename}
-                      </Link>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-400">
-                      {formatBytes(file.size_bytes)}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-400">
-                      {formatDate(file.created_at)}
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className={`px-2 py-1 rounded text-xs ${
-                        file.is_public ? 'bg-green-900/30 text-green-400' : 'bg-gray-800 text-gray-400'
-                      }`}>
-                        {file.is_public ? 'Public' : 'Private'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex gap-2">
-                        <Link
-                          href={`/file/${file.id}`}
-                          className="text-sm text-purple-400 hover:text-purple-300"
-                        >
-                          View
-                        </Link>
-                        <button
-                          onClick={() => deleteFile(file.id)}
-                          className="text-sm text-red-400 hover:text-red-300"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </td>
+          
+          {loading ? (
+            <div className="p-12 text-center">
+              <div className="w-8 h-8 border-2 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+              <p className="text-gray-500">Loading...</p>
+            </div>
+          ) : files.length === 0 ? (
+            <div className="p-12 text-center">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gray-800 flex items-center justify-center">
+                <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <p className="text-gray-400 mb-2">No files yet</p>
+              <p className="text-gray-600 text-sm mb-6">Upload your first file to get started</p>
+              <Link
+                href="/upload"
+                className="inline-block px-5 py-2.5 bg-purple-600 hover:bg-purple-700 rounded-lg font-medium transition"
+              >
+                Upload File
+              </Link>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-800/50 text-left">
+                  <tr>
+                    <th className="px-6 py-3 text-sm font-medium text-gray-400">Name</th>
+                    <th className="px-6 py-3 text-sm font-medium text-gray-400">Size</th>
+                    <th className="px-6 py-3 text-sm font-medium text-gray-400">Date</th>
+                    <th className="px-6 py-3 text-sm font-medium text-gray-400">Status</th>
+                    <th className="px-6 py-3 text-sm font-medium text-gray-400"></th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+                </thead>
+                <tbody className="divide-y divide-gray-800">
+                  {files.map((file) => (
+                    <tr key={file.id} className="hover:bg-gray-800/30 transition">
+                      <td className="px-6 py-4">
+                        <Link href={`/file/${file.id}`} className="text-purple-400 hover:text-purple-300 transition">
+                          {file.original_filename}
+                        </Link>
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {formatBytes(file.size_bytes)}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {formatDate(file.created_at)}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`px-2 py-1 rounded text-xs ${
+                          file.is_public 
+                            ? 'bg-green-500/20 text-green-400' 
+                            : 'bg-gray-800 text-gray-500'
+                        }`}>
+                          {file.is_public ? 'Public' : 'Private'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex gap-4 justify-end">
+                          <Link
+                            href={`/file/${file.id}`}
+                            className="text-sm text-gray-400 hover:text-white transition"
+                          >
+                            View
+                          </Link>
+                          <button
+                            onClick={() => deleteFile(file.id)}
+                            className="text-sm text-gray-400 hover:text-red-400 transition"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
     </main>
   );
