@@ -24,7 +24,9 @@ export default function UploadPage() {
   const [uploadedFileData, setUploadedFileData] = useState<{url: string, shortId: string} | null>(null);
   const [paymentStatus, setPaymentStatus] = useState<'pending' | 'checking' | 'minting' | 'done'>('pending');
   const [mintResult, setMintResult] = useState<{mintAddress: string, txSignature: string} | null>(null);
+  const [paymentTxSignature, setPaymentTxSignature] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [checkCount, setCheckCount] = useState(0);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -114,6 +116,7 @@ export default function UploadPage() {
     
     setPaymentStatus('checking');
     setError('');
+    setCheckCount(prev => prev + 1);
 
     try {
       // Check for payment from the recipient wallet
@@ -130,9 +133,16 @@ export default function UploadPage() {
 
       if (!checkData.confirmed) {
         setPaymentStatus('pending');
-        setError('Payment not found. Make sure you sent from the wallet address you entered.');
+        if (checkCount >= 2) {
+          setError('payment not found yet. transactions can take 30-60 seconds to appear. wait a bit and try again.');
+        } else {
+          setError('payment not found. make sure you sent exactly ' + MINT_PRICE + ' SOL from your wallet.');
+        }
         return;
       }
+
+      // Save payment tx signature
+      setPaymentTxSignature(checkData.txSignature);
 
       // Payment confirmed, mint the NFT
       setPaymentStatus('minting');
@@ -143,7 +153,6 @@ export default function UploadPage() {
         body: JSON.stringify({
           fileUrl: uploadedFileData.url,
           fileName: file.name,
-          fileSize: file.size,
           recipientWallet,
           shortId: uploadedFileData.shortId,
         }),
@@ -185,15 +194,22 @@ export default function UploadPage() {
               </svg>
             </div>
             <h2 className="text-2xl font-bold mb-2 font-caveat">nft minted!</h2>
-            <p className="text-gray-600 mb-6">your file is now an NFT in your wallet</p>
+            <p className="text-gray-600 mb-6">your file is now an nft in your wallet</p>
             
             <div className="space-y-4 text-left">
               <div className="bg-gray-50 p-3 border-2 border-gray-200 rounded">
                 <p className="text-xs text-gray-500 mb-1">mint address</p>
-                <p className="font-mono text-sm break-all">{mintResult.mintAddress}</p>
+                <a 
+                  href={`https://solscan.io/token/${mintResult.mintAddress}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-sm text-blue-600 underline break-all"
+                >
+                  {mintResult.mintAddress}
+                </a>
               </div>
               <div className="bg-gray-50 p-3 border-2 border-gray-200 rounded">
-                <p className="text-xs text-gray-500 mb-1">transaction</p>
+                <p className="text-xs text-gray-500 mb-1">mint transaction</p>
                 <a 
                   href={`https://solscan.io/tx/${mintResult.txSignature}`}
                   target="_blank"
@@ -203,6 +219,19 @@ export default function UploadPage() {
                   view on solscan
                 </a>
               </div>
+              {paymentTxSignature && (
+                <div className="bg-gray-50 p-3 border-2 border-gray-200 rounded">
+                  <p className="text-xs text-gray-500 mb-1">payment transaction</p>
+                  <a 
+                    href={`https://solscan.io/tx/${paymentTxSignature}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-mono text-sm text-blue-600 underline break-all"
+                  >
+                    view on solscan
+                  </a>
+                </div>
+              )}
             </div>
 
             <div className="flex gap-3 mt-6">
@@ -218,6 +247,8 @@ export default function UploadPage() {
                   setShowPayment(false);
                   setMintResult(null);
                   setMintAsNft(false);
+                  setPaymentTxSignature(null);
+                  setCheckCount(0);
                 }}
                 className="btn-outline"
               >
@@ -250,7 +281,7 @@ export default function UploadPage() {
               </div>
 
               <div>
-                <p className="text-sm text-gray-500 mb-2">send {MINT_PRICE} SOL from your wallet to:</p>
+                <p className="text-sm text-gray-500 mb-2">send exactly {MINT_PRICE} SOL from your wallet to:</p>
                 <div className="flex gap-2">
                   <input
                     type="text"
@@ -265,19 +296,30 @@ export default function UploadPage() {
                     {copied ? 'copied' : 'copy'}
                   </button>
                 </div>
-                <p className="text-xs text-gray-400 mt-2">
-                  send from: <span className="font-mono">{recipientWallet.slice(0, 8)}...{recipientWallet.slice(-8)}</span>
-                </p>
               </div>
 
               <div className="bg-[#e8f5e9] p-3 border-2 border-green-300 rounded">
-                <p className="text-xs text-gray-600 mb-1">nft will be sent to the wallet you pay from</p>
+                <p className="text-xs text-gray-600 mb-1">nft will be sent to</p>
                 <p className="font-mono text-sm break-all">{recipientWallet}</p>
+              </div>
+
+              <div className="bg-blue-50 p-3 border-2 border-blue-200 rounded">
+                <p className="text-xs text-blue-800">
+                  after sending, wait 30-60 seconds for the transaction to confirm on solana, then click the button below. minting takes about 15-30 seconds.
+                </p>
               </div>
 
               {error && (
                 <div className="bg-red-50 p-3 border-2 border-red-200 rounded">
                   <p className="text-red-700 text-sm">{error}</p>
+                </div>
+              )}
+
+              {paymentStatus === 'minting' && (
+                <div className="bg-[#fff9e0] p-4 border-2 border-[#e6c200] rounded text-center">
+                  <div className="animate-spin w-6 h-6 border-2 border-black border-t-transparent rounded-full mx-auto mb-2"></div>
+                  <p className="text-sm font-bold">minting your nft...</p>
+                  <p className="text-xs text-gray-600">this takes about 15-30 seconds</p>
                 </div>
               )}
 
@@ -288,7 +330,7 @@ export default function UploadPage() {
                   className="btn-sketch flex-1 disabled:opacity-50"
                 >
                   {paymentStatus === 'checking' ? 'checking payment...' : 
-                   paymentStatus === 'minting' ? 'minting nft...' : 
+                   paymentStatus === 'minting' ? 'minting...' : 
                    'i sent the sol'}
                 </button>
                 <button
@@ -296,14 +338,15 @@ export default function UploadPage() {
                     setShowPayment(false);
                     router.push(`/f/${uploadedFileData?.shortId}`);
                   }}
-                  className="btn-outline"
+                  disabled={paymentStatus === 'minting'}
+                  className="btn-outline disabled:opacity-50"
                 >
                   skip
                 </button>
               </div>
 
               <p className="text-xs text-gray-400 text-center">
-                skip to keep your file without minting an nft
+                payment window: 30 minutes from now
               </p>
             </div>
           </div>

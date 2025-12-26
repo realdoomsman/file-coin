@@ -1,98 +1,62 @@
 'use client';
 
-import { useWallet } from '@solana/wallet-adapter-react';
 import { useState } from 'react';
-import { shortenAddress } from '@/lib/utils';
 
 export default function SettingsPage() {
-  const { publicKey, disconnect } = useWallet();
-  const [theme, setTheme] = useState('dark');
-
-  const handleDisconnect = () => {
-    disconnect();
-    window.location.href = '/';
-  };
-
-  if (!publicKey) {
-    return (
-      <main className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-6">🔒</div>
-          <h1 className="text-3xl font-bold mb-4">Connect Your Wallet</h1>
-          <p className="text-gray-400">Please connect your Solana wallet to access settings</p>
-        </div>
-      </main>
-    );
-  }
+  const [theme, setTheme] = useState('light');
 
   return (
-    <main className="min-h-screen max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">Settings</h1>
-        <p className="text-gray-400">Manage your File Coin account</p>
-      </div>
+    <main className="min-h-screen py-16">
+      <div className="max-w-2xl mx-auto px-6">
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold mb-2 font-caveat">settings</h1>
+          <p className="text-gray-600">manage your preferences</p>
+        </div>
 
-      <div className="space-y-6">
-        {/* Wallet Info */}
-        <div className="bg-gray-900 p-6 rounded-lg border border-gray-800">
-          <h2 className="text-xl font-bold mb-4">Wallet</h2>
-          <div className="space-y-4">
-            <div>
-              <label className="text-sm text-gray-400">Connected Wallet</label>
-              <p className="font-mono text-lg">{shortenAddress(publicKey.toBase58(), 8)}</p>
+        <div className="space-y-6">
+          {/* Theme */}
+          <div className="sketch-border bg-white p-6">
+            <h2 className="text-xl font-bold mb-4">appearance</h2>
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm text-gray-500 block mb-2">theme</label>
+                <select
+                  value={theme}
+                  onChange={(e) => setTheme(e.target.value)}
+                  className="border-2 border-black px-4 py-2 w-full"
+                >
+                  <option value="light">sketchy (default)</option>
+                  <option value="dark">dark (coming soon)</option>
+                </select>
+              </div>
             </div>
-            <button
-              onClick={handleDisconnect}
-              className="px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg font-semibold transition"
+          </div>
+
+          {/* Storage Info */}
+          <div className="sketch-border bg-white p-6">
+            <h2 className="text-xl font-bold mb-4">storage</h2>
+            <p className="text-gray-600 mb-4">
+              filecoin offers free file hosting. upload any file up to 50MB.
+            </p>
+            <a
+              href="/upload"
+              className="btn-sketch inline-block"
             >
-              Disconnect Wallet
-            </button>
+              upload a file
+            </a>
           </div>
-        </div>
 
-        {/* Theme */}
-        <div className="bg-gray-900 p-6 rounded-lg border border-gray-800">
-          <h2 className="text-xl font-bold mb-4">Appearance</h2>
-          <div className="space-y-4">
-            <div>
-              <label className="text-sm text-gray-400 block mb-2">Theme</label>
-              <select
-                value={theme}
-                onChange={(e) => setTheme(e.target.value)}
-                className="bg-gray-800 px-4 py-2 rounded-lg w-full md:w-auto"
-              >
-                <option value="dark">Dark</option>
-                <option value="light">Light (Coming Soon)</option>
-              </select>
+          {/* Help */}
+          <div className="sketch-border bg-white p-6">
+            <h2 className="text-xl font-bold mb-4">help</h2>
+            <div className="space-y-2">
+              <a href="/docs" className="block text-gray-700 hover:text-black underline">
+                documentation
+              </a>
+              <a href="/lore" className="block text-gray-700 hover:text-black underline">
+                read the lore
+              </a>
             </div>
-          </div>
-        </div>
-
-        {/* Storage Info */}
-        <div className="bg-gray-900 p-6 rounded-lg border border-gray-800">
-          <h2 className="text-xl font-bold mb-4">Storage Plan</h2>
-          <p className="text-gray-400 mb-4">
-            Your storage tier is determined by your $FILE token holdings. 
-            Acquire more tokens to automatically upgrade your storage limits.
-          </p>
-          <a
-            href="/app"
-            className="inline-block px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold transition"
-          >
-            View Storage Usage
-          </a>
-        </div>
-
-        {/* Help */}
-        <div className="bg-gray-900 p-6 rounded-lg border border-gray-800">
-          <h2 className="text-xl font-bold mb-4">Help & Support</h2>
-          <div className="space-y-2">
-            <a href="/docs" className="block text-purple-400 hover:text-purple-300">
-              → Documentation
-            </a>
-            <a href="/lore" className="block text-purple-400 hover:text-purple-300">
-              → Read The Lore
-            </a>
           </div>
         </div>
       </div>
