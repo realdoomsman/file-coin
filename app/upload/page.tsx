@@ -117,8 +117,7 @@ export default function UploadPage() {
         router.push(`/f/${data.shortId}`);
       }, 500);
     } catch {
-      const message = err instanceof Error ? err.message : 'Upload failed';
-      setError(message);
+      setError('Upload failed');
       setUploading(false);
     }
   };
