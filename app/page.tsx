@@ -9,7 +9,7 @@ export default function Home() {
           hidden in plain sight since 2017
         </p>
         
-        <h1 className="text-6xl md:text-8xl font-bold mb-6 text-black" style={{ fontFamily: 'Caveat, cursive' }}>
+        <h1 className="text-6xl md:text-8xl font-bold mb-6 text-black font-caveat">
           filecoin
         </h1>
         
@@ -48,7 +48,7 @@ export default function Home() {
       {/* The Discovery */}
       <section className="max-w-3xl mx-auto px-6 py-16">
         <div className="sketch-border-yellow p-8">
-          <h2 className="text-3xl font-bold mb-6" style={{ fontFamily: 'Caveat, cursive' }}>the discovery</h2>
+          <h2 className="text-3xl font-bold mb-6 font-caveat">the discovery</h2>
           
           <div className="space-y-4 text-lg">
             <p>
@@ -74,7 +74,7 @@ export default function Home() {
 
       {/* Toly Tweet */}
       <section className="max-w-3xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold mb-6 text-center" style={{ fontFamily: 'Caveat, cursive' }}>the signal</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center font-caveat">the signal</h2>
         <p className="text-center text-gray-600 mb-8">
           toly himself posted about it. no context. no explanation.
         </p>
@@ -96,7 +96,7 @@ export default function Home() {
 
       {/* How It Works */}
       <section className="max-w-4xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold mb-6 text-center" style={{ fontFamily: 'Caveat, cursive' }}>how it works</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center font-caveat">how it works</h2>
         <p className="text-center text-gray-600 mb-10">
           real file storage. no wallet required to start.
         </p>
@@ -125,7 +125,7 @@ export default function Home() {
 
       {/* Storage Tiers */}
       <section className="max-w-4xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold mb-6 text-center" style={{ fontFamily: 'Caveat, cursive' }}>storage tiers</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center font-caveat">storage tiers</h2>
         <p className="text-center text-gray-600 mb-10">
           everyone gets free storage. holders get more.
         </p>
@@ -165,7 +165,7 @@ export default function Home() {
 
       {/* CTA */}
       <section className="max-w-3xl mx-auto px-6 py-20 text-center">
-        <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: 'Caveat, cursive' }}>ready to try it?</h2>
+        <h2 className="text-3xl font-bold mb-4 font-caveat">ready to try it?</h2>
         <p className="text-gray-600 mb-8">
           no signup. no wallet required. just upload.
         </p>

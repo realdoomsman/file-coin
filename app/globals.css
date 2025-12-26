@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Patrick+Hand&display=swap');
-
 :root {
   --background: #fffef5;
   --foreground: #1a1a1a;
@@ -15,8 +13,16 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Patrick Hand', cursive;
   -webkit-font-smoothing: auto;
+}
+
+/* Font classes */
+.font-caveat {
+  font-family: var(--font-caveat), cursive;
+}
+
+.font-patrick {
+  font-family: var(--font-patrick), cursive;
 }
 
 /* Sketchy hand-drawn border effect */
@@ -55,7 +61,7 @@ body {
   color: #1a1a1a !important;
   border: 3px solid #1a1a1a !important;
   border-radius: 2px 8px 2px 12px !important;
-  font-family: 'Patrick Hand', cursive !important;
+  font-family: var(--font-patrick), cursive !important;
   font-size: 1.1rem !important;
   font-weight: 400 !important;
   box-shadow: 3px 3px 0 rgba(0,0,0,0.2) !important;
@@ -71,12 +77,12 @@ body {
   background-color: #fffef5 !important;
   border: 3px solid #1a1a1a !important;
   border-radius: 2px 8px 2px 12px !important;
-  font-family: 'Patrick Hand', cursive !important;
+  font-family: var(--font-patrick), cursive !important;
 }
 
 .wallet-adapter-dropdown-list-item {
   color: #1a1a1a !important;
-  font-family: 'Patrick Hand', cursive !important;
+  font-family: var(--font-patrick), cursive !important;
 }
 
 .wallet-adapter-dropdown-list-item:hover {
@@ -86,7 +92,7 @@ body {
 .wallet-adapter-modal-wrapper {
   background-color: #fffef5 !important;
   border: 3px solid #1a1a1a !important;
-  font-family: 'Patrick Hand', cursive !important;
+  font-family: var(--font-patrick), cursive !important;
 }
 
 /* Selection */
@@ -116,10 +122,11 @@ body {
   border: 3px solid #1a1a1a;
   border-radius: 2px 8px 2px 12px;
   box-shadow: 4px 4px 0 var(--yellow-dark);
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-patrick), cursive;
   font-size: 1.2rem;
   padding: 0.75rem 1.5rem;
   transition: all 0.1s;
+  display: inline-block;
 }
 
 .btn-sketch:hover {
@@ -138,10 +145,11 @@ body {
   border: 3px solid #1a1a1a;
   border-radius: 2px 8px 2px 12px;
   box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-patrick), cursive;
   font-size: 1.2rem;
   padding: 0.75rem 1.5rem;
   transition: all 0.1s;
+  display: inline-block;
 }
 
 .btn-outline:hover {

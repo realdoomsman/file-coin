@@ -7,7 +7,7 @@ export default function LorePage() {
       <section className="py-20 border-b-3 border-black">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <p className="text-sm tracking-widest uppercase mb-4 text-[#b39700]">the origin story</p>
-          <h1 className="text-5xl font-bold mb-6" style={{ fontFamily: 'Caveat, cursive' }}>the forgotten reference</h1>
+          <h1 className="text-5xl font-bold mb-6 font-caveat">the forgotten reference</h1>
           <p className="text-xl text-gray-600">
             how a buried whitepaper mention became something real.
           </p>
@@ -21,7 +21,7 @@ export default function LorePage() {
           {/* Chapter 1 */}
           <div className="mb-16">
             <p className="text-sm tracking-widest uppercase mb-2 text-[#b39700]">chapter 1</p>
-            <h2 className="text-3xl font-bold mb-6" style={{ fontFamily: 'Caveat, cursive' }}>the whitepaper</h2>
+            <h2 className="text-3xl font-bold mb-6 font-caveat">the whitepaper</h2>
             
             <div className="space-y-4 text-lg">
               <p>
@@ -59,7 +59,7 @@ export default function LorePage() {
           {/* Chapter 2 */}
           <div className="mb-16">
             <p className="text-sm tracking-widest uppercase mb-2 text-[#b39700]">chapter 2</p>
-            <h2 className="text-3xl font-bold mb-6" style={{ fontFamily: 'Caveat, cursive' }}>the tweet</h2>
+            <h2 className="text-3xl font-bold mb-6 font-caveat">the tweet</h2>
             
             <div className="space-y-4 text-lg">
               <p>
@@ -92,7 +92,7 @@ export default function LorePage() {
           {/* Chapter 3 */}
           <div className="mb-16">
             <p className="text-sm tracking-widest uppercase mb-2 text-[#b39700]">chapter 3</p>
-            <h2 className="text-3xl font-bold mb-6" style={{ fontFamily: 'Caveat, cursive' }}>the revival</h2>
+            <h2 className="text-3xl font-bold mb-6 font-caveat">the revival</h2>
             
             <div className="space-y-4 text-lg">
               <p>
@@ -121,7 +121,7 @@ export default function LorePage() {
           {/* Chapter 4 */}
           <div className="mb-16">
             <p className="text-sm tracking-widest uppercase mb-2 text-[#b39700]">chapter 4</p>
-            <h2 className="text-3xl font-bold mb-6" style={{ fontFamily: 'Caveat, cursive' }}>the mission</h2>
+            <h2 className="text-3xl font-bold mb-6 font-caveat">the mission</h2>
             
             <div className="space-y-4 text-lg">
               <p>

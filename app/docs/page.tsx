@@ -7,7 +7,7 @@ export default function DocsPage() {
       <section className="py-20 border-b-3 border-black">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <p className="text-sm tracking-widest uppercase mb-4 text-[#b39700]">documentation</p>
-          <h1 className="text-5xl font-bold mb-6" style={{ fontFamily: 'Caveat, cursive' }}>how it works</h1>
+          <h1 className="text-5xl font-bold mb-6 font-caveat">how it works</h1>
           <p className="text-xl text-gray-600">
             everything you need to know about using filecoin.
           </p>
@@ -20,7 +20,7 @@ export default function DocsPage() {
           
           {/* Quick Start */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-6" style={{ fontFamily: 'Caveat, cursive' }}>quick start</h2>
+            <h2 className="text-3xl font-bold mb-6 font-caveat">quick start</h2>
             <div className="sketch-border bg-white p-6">
               <ol className="space-y-4">
                 <li className="flex gap-4">
@@ -50,7 +50,7 @@ export default function DocsPage() {
 
           {/* Storage Tiers */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-6" style={{ fontFamily: 'Caveat, cursive' }}>storage tiers</h2>
+            <h2 className="text-3xl font-bold mb-6 font-caveat">storage tiers</h2>
             <div className="space-y-4">
               <div className="sketch-border bg-white p-5">
                 <div className="flex justify-between items-start mb-3">
@@ -92,7 +92,7 @@ export default function DocsPage() {
 
           {/* Features */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-6" style={{ fontFamily: 'Caveat, cursive' }}>features</h2>
+            <h2 className="text-3xl font-bold mb-6 font-caveat">features</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="sketch-border bg-white p-4">
                 <h3 className="font-bold mb-2">file upload</h3>
@@ -115,7 +115,7 @@ export default function DocsPage() {
 
           {/* API Reference */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-6" style={{ fontFamily: 'Caveat, cursive' }}>api reference</h2>
+            <h2 className="text-3xl font-bold mb-6 font-caveat">api reference</h2>
             <div className="space-y-4">
               <div className="sketch-border bg-white p-5">
                 <div className="flex items-center gap-3 mb-3">
@@ -158,7 +158,7 @@ export default function DocsPage() {
 
           {/* FAQ */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-6" style={{ fontFamily: 'Caveat, cursive' }}>faq</h2>
+            <h2 className="text-3xl font-bold mb-6 font-caveat">faq</h2>
             <div className="space-y-4">
               <div className="sketch-border bg-white p-4">
                 <h3 className="font-bold mb-2">what files can i upload?</h3>

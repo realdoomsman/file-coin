@@ -90,7 +90,7 @@ export default function UploadPage() {
       <div className="max-w-xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold mb-3" style={{ fontFamily: 'Caveat, cursive' }}>upload a file</h1>
+          <h1 className="text-4xl font-bold mb-3 font-caveat">upload a file</h1>
           <p className="text-gray-600">
             {connected 
               ? 'connected - enjoying holder benefits' 

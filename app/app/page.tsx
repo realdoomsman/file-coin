@@ -59,7 +59,7 @@ export default function AppPage() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold mb-3" style={{ fontFamily: 'Caveat, cursive' }}>connect your wallet</h1>
+          <h1 className="text-3xl font-bold mb-3 font-caveat">connect your wallet</h1>
           <p className="text-gray-600 mb-6">
             connect your wallet to view your dashboard and manage your files.
           </p>
@@ -78,7 +78,7 @@ export default function AppPage() {
       <div className="max-w-4xl mx-auto px-6">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2" style={{ fontFamily: 'Caveat, cursive' }}>dashboard</h1>
+          <h1 className="text-4xl font-bold mb-2 font-caveat">dashboard</h1>
           <p className="text-gray-600 font-mono text-sm">
             {shortenAddress(publicKey?.toBase58() || '')}
           </p>
