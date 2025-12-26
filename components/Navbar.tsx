@@ -16,7 +16,7 @@ export default function Navbar() {
 
           <div className="hidden md:flex items-center gap-8">
             <Link href="/lore" className="text-lg text-black hover:text-[#b39700] transition">
-              story
+              lore
             </Link>
             <Link href="/upload" className="text-lg text-black hover:text-[#b39700] transition">
               upload
