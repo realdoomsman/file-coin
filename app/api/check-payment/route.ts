@@ -5,7 +5,7 @@ const PAYMENT_WALLET = process.env.NEXT_PUBLIC_PAYMENT_WALLET || '';
 
 export async function POST(request: NextRequest) {
   try {
-    const { paymentId, expectedAmount, wallet: _wallet } = await request.json();
+    const { paymentId, expectedAmount } = await request.json();
 
     if (!PAYMENT_WALLET) {
       return NextResponse.json({ 
