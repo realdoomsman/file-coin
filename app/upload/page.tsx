@@ -19,6 +19,7 @@ export default function UploadPage() {
   const [error, setError] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const [storageType, setStorageType] = useState<'cloud' | 'onchain'>('cloud');
+  const [isPublic, setIsPublic] = useState(true);
   
   // On-chain payment state
   const [showPayment, setShowPayment] = useState(false);
@@ -89,6 +90,7 @@ export default function UploadPage() {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('storageType', isOnchain ? 'onchain' : 'cloud');
+      formData.append('isPublic', isPublic.toString());
       if (txSignature) {
         formData.append('txSignature', txSignature);
       }
@@ -352,6 +354,33 @@ export default function UploadPage() {
                         estimated cost: {calculatePayment(file.size).toFixed(4)} SOL
                       </p>
                     )}
+                  </div>
+                )}
+
+                {/* Visibility Toggle */}
+                {!uploading && (
+                  <div className="space-y-3">
+                    <p className="font-bold text-sm">visibility</p>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        onClick={() => setIsPublic(true)}
+                        className={`p-4 border-2 border-black text-left transition ${
+                          isPublic ? 'bg-[#fff9e0]' : 'bg-white hover:bg-gray-50'
+                        }`}
+                      >
+                        <p className="font-bold">public</p>
+                        <p className="text-sm text-gray-600">visible in explorer</p>
+                      </button>
+                      <button
+                        onClick={() => setIsPublic(false)}
+                        className={`p-4 border-2 border-black text-left transition ${
+                          !isPublic ? 'bg-[#fff9e0]' : 'bg-white hover:bg-gray-50'
+                        }`}
+                      >
+                        <p className="font-bold">private</p>
+                        <p className="text-sm text-gray-600">only with link</p>
+                      </button>
+                    </div>
                   </div>
                 )}
 

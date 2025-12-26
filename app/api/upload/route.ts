@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
     const file = formData.get('file') as File;
     const storageType = formData.get('storageType') as string || 'cloud';
     const txSignature = formData.get('txSignature') as string | null;
+    const isPublic = formData.get('isPublic') !== 'false';
 
     if (!file) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
@@ -81,7 +82,7 @@ export async function POST(request: NextRequest) {
         size_bytes: file.size,
         storage_provider: storageType === 'onchain' ? 'solana' : 'supabase',
         url: urlData.publicUrl,
-        is_public: true,
+        is_public: isPublic,
         short_id: shortId,
         tx_signature: txSignature || null,
       })
