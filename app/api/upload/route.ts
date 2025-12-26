@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     const file = formData.get('file') as File;
     const storageType = formData.get('storageType') as string || 'cloud';
     const txSignature = formData.get('txSignature') as string | null;
-    const paymentId = formData.get('paymentId') as string | null;
+    const _paymentId = formData.get('paymentId') as string | null;
 
     if (!file) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });

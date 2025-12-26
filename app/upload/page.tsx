@@ -116,7 +116,7 @@ export default function UploadPage() {
       setTimeout(() => {
         router.push(`/f/${data.shortId}`);
       }, 500);
-    } catch (err) {
+    } catch {
       const message = err instanceof Error ? err.message : 'Upload failed';
       setError(message);
       setUploading(false);
@@ -147,7 +147,7 @@ export default function UploadPage() {
         setPaymentStatus('pending');
         setError('Payment not found yet. Make sure you sent the exact amount.');
       }
-    } catch (err) {
+    } catch {
       setPaymentStatus('failed');
       setError('Failed to check payment. Try again.');
     }
