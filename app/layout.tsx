@@ -1,14 +1,35 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Caveat, Patrick_Hand } from "next/font/google";
 import "./globals.css";
-import { WalletContextProvider } from "@/components/WalletProvider";
 import Navbar from "@/components/Navbar";
 
-const inter = Inter({ subsets: ["latin"] });
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-caveat",
+  display: "swap",
+});
+
+const patrickHand = Patrick_Hand({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-patrick",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "File Coin - The Dumbest Storage Network That Accidentally Works",
-  description: "Inspired by the 3 hidden Filecoin references inside the Solana whitepaper. Real file storage on Solana.",
+  title: "filecoin",
+  description: "the forgotten solana reference. free file hosting.",
+  openGraph: {
+    title: "filecoin",
+    description: "the forgotten solana reference. free file hosting.",
+    siteName: "filecoin",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "filecoin",
+    description: "the forgotten solana reference. free file hosting.",
+  },
 };
 
 export default function RootLayout({
@@ -17,12 +38,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.className} bg-black text-white min-h-screen`}>
-        <WalletContextProvider>
-          <Navbar />
-          {children}
-        </WalletContextProvider>
+    <html lang="en" className={`${caveat.variable} ${patrickHand.variable}`}>
+      <body className="min-h-screen paper-bg font-patrick">
+        <Navbar />
+        {children}
       </body>
     </html>
   );
