@@ -4,7 +4,6 @@ import { createUmi } from '@metaplex-foundation/umi-bundle-defaults';
 import { 
   mplTokenMetadata,
   createNft,
-  TokenStandard
 } from '@metaplex-foundation/mpl-token-metadata';
 import { 
   generateSigner, 
@@ -90,7 +89,6 @@ export async function POST(request: NextRequest) {
       uri: metadataUri,
       sellerFeeBasisPoints: percentAmount(0), // No royalties
       tokenOwner: publicKey(recipientWallet),
-      tokenStandard: TokenStandard.NonFungible,
     }).sendAndConfirm(umi);
 
     // Convert signature to base58
