@@ -158,7 +158,18 @@ export default function UploadPage() {
         }),
       });
 
-      const mintData = await mintResponse.json();
+      // Handle empty response or timeout
+      const responseText = await mintResponse.text();
+      if (!responseText) {
+        throw new Error('minting timed out. the nft may still be processing - check your wallet in a few minutes.');
+      }
+
+      let mintData;
+      try {
+        mintData = JSON.parse(responseText);
+      } catch {
+        throw new Error('minting response error. check your wallet - the nft may have been created.');
+      }
 
       if (!mintResponse.ok) {
         throw new Error(mintData.error || 'Minting failed');

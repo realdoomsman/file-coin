@@ -1,11 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PublicKey, Connection, Keypair, Transaction, SystemProgram, sendAndConfirmTransaction, TransactionInstruction } from '@solana/web3.js';
+import { PublicKey, Connection, Keypair, Transaction, SystemProgram, TransactionInstruction } from '@solana/web3.js';
 import { createInitializeMintInstruction, createAssociatedTokenAccountInstruction, createMintToInstruction, getAssociatedTokenAddress, MINT_SIZE, TOKEN_PROGRAM_ID, getMinimumBalanceForRentExemptMint } from '@solana/spl-token';
 import { supabase } from '@/lib/supabase';
 import bs58 from 'bs58';
 
 const SOLANA_RPC = process.env.NEXT_PUBLIC_SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com';
 const WALLET_PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY || '';
+
+// Helper to send and confirm transaction with timeout
+async function sendAndConfirmTx(
+  connection: Connection,
+  transaction: Transaction,
+  signers: Keypair[]
+): Promise<string> {
+  const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash('confirmed');
+  transaction.recentBlockhash = blockhash;
+  transaction.feePayer = signers[0].publicKey;
+  transaction.sign(...signers);
+  
+  const signature = await connection.sendRawTransaction(transaction.serialize(), {
+    skipPreflight: false,
+    preflightCommitment: 'confirmed',
+  });
+  
+  await connection.confirmTransaction({
+    signature,
+    blockhash,
+    lastValidBlockHeight,
+  }, 'confirmed');
+  
+  return signature;
+}
 
 // Token Metadata Program ID
 const TOKEN_METADATA_PROGRAM_ID = new PublicKey('metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s');
@@ -125,6 +150,8 @@ function createMasterEditionInstruction(
   });
 }
 
+export const maxDuration = 60; // Allow up to 60 seconds for minting
+
 export async function POST(request: NextRequest) {
   try {
     const { fileUrl, fileName, recipientWallet, shortId } = await request.json();
@@ -213,7 +240,7 @@ export async function POST(request: NextRequest) {
       createMintToInstruction(mintPubkey, associatedTokenAccount, payer.publicKey, 1)
     );
 
-    await sendAndConfirmTransaction(connection, tx1, [payer, mintKeypair]);
+    await sendAndConfirmTx(connection, tx1, [payer, mintKeypair]);
 
     // Transaction 2: Create metadata
     const tx2 = new Transaction().add(
@@ -229,7 +256,7 @@ export async function POST(request: NextRequest) {
       )
     );
 
-    await sendAndConfirmTransaction(connection, tx2, [payer]);
+    await sendAndConfirmTx(connection, tx2, [payer]);
 
     // Transaction 3: Create master edition
     const tx3 = new Transaction().add(
@@ -243,7 +270,7 @@ export async function POST(request: NextRequest) {
       )
     );
 
-    const signature = await sendAndConfirmTransaction(connection, tx3, [payer]);
+    const signature = await sendAndConfirmTx(connection, tx3, [payer]);
 
     return NextResponse.json({
       success: true,
