@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Connection, Keypair, PublicKey } from '@solana/web3.js';
+import { PublicKey } from '@solana/web3.js';
 import { createUmi } from '@metaplex-foundation/umi-bundle-defaults';
 import { 
   mplTokenMetadata,
