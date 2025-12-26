@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { supabase } from '@/lib/supabase';
 
 const SOLANA_RPC = process.env.NEXT_PUBLIC_SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com';
 const PAYMENT_WALLET = process.env.NEXT_PUBLIC_PAYMENT_WALLET || '';
 
 export async function POST(request: NextRequest) {
   try {
-    const { paymentId, expectedAmount } = await request.json();
+    const { expectedAmount } = await request.json();
 
     if (!PAYMENT_WALLET) {
       return NextResponse.json({ 
@@ -38,8 +39,29 @@ export async function POST(request: NextRequest) {
 
     const signatures = data.result || [];
 
+    // Get list of already-used transaction signatures from database
+    const { data: usedTxs } = await supabase
+      .from('used_payments')
+      .select('tx_signature')
+      .order('created_at', { ascending: false })
+      .limit(100);
+
+    const usedSignatures = new Set((usedTxs || []).map(t => t.tx_signature));
+
     // Check each recent transaction
     for (const sig of signatures) {
+      // Skip if this transaction was already used
+      if (usedSignatures.has(sig.signature)) {
+        continue;
+      }
+
+      // Skip transactions older than 10 minutes
+      const txTime = sig.blockTime ? sig.blockTime * 1000 : 0;
+      const tenMinutesAgo = Date.now() - 10 * 60 * 1000;
+      if (txTime && txTime < tenMinutesAgo) {
+        continue;
+      }
+
       // Get transaction details
       const txResponse = await fetch(SOLANA_RPC, {
         method: 'POST',
@@ -60,21 +82,7 @@ export async function POST(request: NextRequest) {
 
       if (!tx || !tx.meta || tx.meta.err) continue;
 
-      // Check if this transaction has our payment ID in the memo
-      const instructions = tx.transaction?.message?.instructions || [];
-      let hasMemo = false;
-      
-      for (const ix of instructions) {
-        if (ix.program === 'spl-memo' || ix.programId === 'MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr') {
-          const memoData = ix.parsed || ix.data;
-          if (memoData && memoData.includes(paymentId)) {
-            hasMemo = true;
-            break;
-          }
-        }
-      }
-
-      // Check the transfer amount
+      // Check the transfer amount to our wallet
       const preBalances = tx.meta.preBalances || [];
       const postBalances = tx.meta.postBalances || [];
       const accountKeys = tx.transaction?.message?.accountKeys || [];
@@ -84,13 +92,20 @@ export async function POST(request: NextRequest) {
         if (pubkey === PAYMENT_WALLET) {
           const received = (postBalances[i] - preBalances[i]) / 1e9; // Convert lamports to SOL
           
-          // Check if amount matches (with small tolerance for fees)
-          if (received >= expectedAmount * 0.99) {
+          // Check if amount matches (with 5% tolerance)
+          if (received >= expectedAmount * 0.95) {
+            // Mark this transaction as used
+            await supabase
+              .from('used_payments')
+              .insert({ 
+                tx_signature: sig.signature,
+                amount: received,
+              });
+
             return NextResponse.json({
               confirmed: true,
               txSignature: sig.signature,
               amount: received,
-              hasMemo
             });
           }
         }

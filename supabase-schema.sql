@@ -24,6 +24,14 @@ CREATE TABLE IF NOT EXISTS files (
   short_id TEXT UNIQUE
 );
 
+-- Used payments table (tracks which transactions have been used for minting)
+CREATE TABLE IF NOT EXISTS used_payments (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  tx_signature TEXT UNIQUE NOT NULL,
+  amount DECIMAL(20, 9),
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_files_owner ON files(owner_wallet);
 CREATE INDEX IF NOT EXISTS idx_files_public ON files(is_public);
