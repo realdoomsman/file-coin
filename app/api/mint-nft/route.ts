@@ -15,7 +15,7 @@ import {
 import bs58 from 'bs58';
 
 const SOLANA_RPC = process.env.NEXT_PUBLIC_SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com';
-const MINT_WALLET_PRIVATE_KEY = process.env.MINT_WALLET_PRIVATE_KEY || '';
+const WALLET_PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY || '';
 
 export async function POST(request: NextRequest) {
   try {
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       shortId 
     } = await request.json();
 
-    if (!MINT_WALLET_PRIVATE_KEY) {
+    if (!WALLET_PRIVATE_KEY) {
       return NextResponse.json({ 
         error: 'Minting not configured. Contact admin.' 
       }, { status: 500 });
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     const umi = createUmi(SOLANA_RPC).use(mplTokenMetadata());
     
     // Decode the private key and create keypair
-    const secretKey = bs58.decode(MINT_WALLET_PRIVATE_KEY);
+    const secretKey = bs58.decode(WALLET_PRIVATE_KEY);
     const mintWallet = umi.eddsa.createKeypairFromSecretKey(secretKey);
     umi.use(keypairIdentity(mintWallet));
 
