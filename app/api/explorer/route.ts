@@ -14,6 +14,7 @@ export async function GET() {
       .from('files')
       .select('*')
       .eq('is_public', true)
+      .neq('original_filename', 'audio_2025-12-23_17-24-38.ogg')
       .order('created_at', { ascending: false })
       .limit(100);
 
