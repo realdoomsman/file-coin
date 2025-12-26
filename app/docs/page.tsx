@@ -131,6 +131,57 @@ export default function DocsPage() {
             </div>
           </div>
 
+          {/* API Reference */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold mb-6 font-caveat">api reference</h2>
+            <div className="space-y-4">
+              <div className="sketch-border bg-white p-5">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="px-2 py-1 bg-green-100 border-2 border-black text-xs font-mono">POST</span>
+                  <code className="text-sm">/api/upload</code>
+                </div>
+                <p className="text-gray-600 text-sm mb-3">upload a file.</p>
+                <pre className="bg-gray-50 p-3 text-xs overflow-x-auto border-2 border-gray-200">
+{`FormData:
+  file: File (required)
+  isPublic: boolean (optional, default true)
+  customName: string (optional)`}
+                </pre>
+              </div>
+              
+              <div className="sketch-border bg-white p-5">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="px-2 py-1 bg-blue-100 border-2 border-black text-xs font-mono">GET</span>
+                  <code className="text-sm">/f/[shortId]</code>
+                </div>
+                <p className="text-gray-600 text-sm">view a file by its short id.</p>
+              </div>
+              
+              <div className="sketch-border bg-white p-5">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="px-2 py-1 bg-blue-100 border-2 border-black text-xs font-mono">GET</span>
+                  <code className="text-sm">/api/explorer</code>
+                </div>
+                <p className="text-gray-600 text-sm">get all public files.</p>
+              </div>
+              
+              <div className="sketch-border bg-white p-5">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="px-2 py-1 bg-green-100 border-2 border-black text-xs font-mono">POST</span>
+                  <code className="text-sm">/api/mint-nft</code>
+                </div>
+                <p className="text-gray-600 text-sm mb-3">mint a file as an nft (requires payment).</p>
+                <pre className="bg-gray-50 p-3 text-xs overflow-x-auto border-2 border-gray-200">
+{`JSON body:
+  fileUrl: string
+  fileName: string
+  recipientWallet: string
+  shortId: string`}
+                </pre>
+              </div>
+            </div>
+          </div>
+
           {/* CTA */}
           <div className="text-center pt-8 border-t-3 border-black">
             <p className="text-gray-600 mb-6">ready to get started?</p>
