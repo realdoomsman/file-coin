@@ -66,8 +66,7 @@ export default function FilePage() {
     return (
       <main className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4">⏳</div>
-          <p className="text-gray-400">Loading file...</p>
+          <p className="text-gray-600">loading file...</p>
         </div>
       </main>
     );
@@ -77,13 +76,12 @@ export default function FilePage() {
     return (
       <main className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4">❌</div>
-          <h1 className="text-3xl font-bold mb-4">File Not Found</h1>
+          <h1 className="text-3xl font-bold mb-4 font-caveat">file not found</h1>
           <button
             onClick={() => router.push('/app')}
-            className="px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold transition"
+            className="btn-sketch"
           >
-            Back to Dashboard
+            back to dashboard
           </button>
         </div>
       </main>
@@ -93,96 +91,98 @@ export default function FilePage() {
   const isOwner = publicKey?.toBase58() === file.owner_wallet;
 
   return (
-    <main className="min-h-screen max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="mb-8">
-        <button
-          onClick={() => router.push('/app')}
-          className="text-purple-400 hover:text-purple-300 mb-4"
-        >
-          ← Back to Dashboard
-        </button>
-        <h1 className="text-4xl font-bold mb-2">{file.original_filename}</h1>
-      </div>
-
-      <div className="bg-gray-900 p-8 rounded-lg border border-gray-800 mb-6">
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <h3 className="text-sm text-gray-400 mb-1">File Name</h3>
-            <p className="font-semibold">{file.original_filename}</p>
-          </div>
-          <div>
-            <h3 className="text-sm text-gray-400 mb-1">Size</h3>
-            <p className="font-semibold">{formatBytes(file.size_bytes)}</p>
-          </div>
-          <div>
-            <h3 className="text-sm text-gray-400 mb-1">Upload Date</h3>
-            <p className="font-semibold">{formatDate(file.created_at)}</p>
-          </div>
-          <div>
-            <h3 className="text-sm text-gray-400 mb-1">Owner</h3>
-            <p className="font-semibold">{shortenAddress(file.owner_wallet)}</p>
-          </div>
-          <div>
-            <h3 className="text-sm text-gray-400 mb-1">Storage Provider</h3>
-            <p className="font-semibold capitalize">{file.storage_provider}</p>
-          </div>
-          <div>
-            <h3 className="text-sm text-gray-400 mb-1">Visibility</h3>
-            <span className={`inline-block px-3 py-1 rounded text-sm font-semibold ${
-              file.is_public ? 'bg-green-900/30 text-green-400' : 'bg-gray-800 text-gray-400'
-            }`}>
-              {file.is_public ? 'Public' : 'Private'}
-            </span>
-          </div>
+    <main className="min-h-screen py-12">
+      <div className="max-w-3xl mx-auto px-6">
+        <div className="mb-8">
+          <button
+            onClick={() => router.push('/app')}
+            className="text-[#b39700] hover:text-black mb-4 underline"
+          >
+            ← Back to Dashboard
+          </button>
+          <h1 className="text-3xl font-bold">{file.original_filename}</h1>
         </div>
 
-        {file.url && (
-          <div className="mt-6 pt-6 border-t border-gray-800">
-            <h3 className="text-sm text-gray-400 mb-2">Direct URL</h3>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={file.url}
-                readOnly
-                className="flex-1 bg-gray-800 px-4 py-2 rounded text-sm"
-              />
-              <button
-                onClick={() => navigator.clipboard.writeText(file.url)}
-                className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded font-semibold transition"
-              >
-                Copy
-              </button>
+        <div className="sketch-border bg-white p-6 mb-6">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="text-sm text-gray-500 mb-1">file name</h3>
+              <p className="font-bold">{file.original_filename}</p>
+            </div>
+            <div>
+              <h3 className="text-sm text-gray-500 mb-1">size</h3>
+              <p className="font-bold">{formatBytes(file.size_bytes)}</p>
+            </div>
+            <div>
+              <h3 className="text-sm text-gray-500 mb-1">upload date</h3>
+              <p className="font-bold">{formatDate(file.created_at)}</p>
+            </div>
+            <div>
+              <h3 className="text-sm text-gray-500 mb-1">owner</h3>
+              <p className="font-bold font-mono text-sm">{shortenAddress(file.owner_wallet)}</p>
+            </div>
+            <div>
+              <h3 className="text-sm text-gray-500 mb-1">storage provider</h3>
+              <p className="font-bold capitalize">{file.storage_provider}</p>
+            </div>
+            <div>
+              <h3 className="text-sm text-gray-500 mb-1">visibility</h3>
+              <span className={`inline-block px-3 py-1 text-sm font-bold border-2 border-black ${
+                file.is_public ? 'bg-green-200' : 'bg-gray-200'
+              }`}>
+                {file.is_public ? 'public' : 'private'}
+              </span>
             </div>
           </div>
-        )}
-      </div>
 
-      <div className="flex gap-4">
-        <button
-          onClick={downloadFile}
-          className="px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold transition"
-        >
-          Download File
-        </button>
-        
-        {isOwner && (
-          <button
-            onClick={togglePublic}
-            disabled={updating}
-            className="px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-lg font-semibold transition disabled:opacity-50"
-          >
-            {updating ? 'Updating...' : file.is_public ? 'Make Private' : 'Make Public'}
-          </button>
-        )}
-      </div>
-
-      {!isOwner && !file.is_public && (
-        <div className="mt-6 bg-yellow-900/20 border border-yellow-600 rounded p-4">
-          <p className="text-yellow-400">
-            This file is private. You can view it because you have the direct link.
-          </p>
+          {file.url && (
+            <div className="mt-6 pt-6 border-t-2 border-gray-200">
+              <h3 className="text-sm text-gray-500 mb-2">Direct URL</h3>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={file.url}
+                  readOnly
+                  className="flex-1 border-2 border-black px-3 py-2 text-sm bg-gray-50"
+                />
+                <button
+                  onClick={() => navigator.clipboard.writeText(file.url)}
+                  className="px-4 py-2 border-2 border-black bg-gray-100 hover:bg-gray-200 font-bold transition"
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
+          )}
         </div>
-      )}
+
+        <div className="flex gap-4">
+          <button
+            onClick={downloadFile}
+            className="btn-sketch"
+          >
+            Download File
+          </button>
+          
+          {isOwner && (
+            <button
+              onClick={togglePublic}
+              disabled={updating}
+              className="btn-outline disabled:opacity-50"
+            >
+              {updating ? 'updating...' : file.is_public ? 'make private' : 'make public'}
+            </button>
+          )}
+        </div>
+
+        {!isOwner && !file.is_public && (
+          <div className="mt-6 sketch-border-yellow p-4">
+            <p>
+              this file is private. you can view it because you have the direct link.
+            </p>
+          </div>
+        )}
+      </div>
     </main>
   );
 }
