@@ -40,17 +40,8 @@ export default function Home() {
           >
             whitepaper proof
           </a>
-          <a 
-            href="https://x.com/i/communities/1994913381581484366" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="hover:text-black transition underline"
-          >
-            community
-          </a>
-          <span className="font-mono text-xs text-gray-500">
-            CA: M35pQqnEQJzTAz6x8JUzuQpAWCggKdkxQj7MbkHpump
-          </span>
+          <span className="text-gray-400">community - soon</span>
+          <span className="font-mono text-xs text-gray-400">CA - soon</span>
         </div>
       </section>
 
@@ -193,9 +184,6 @@ export default function Home() {
             <div className="flex gap-6 text-sm text-gray-600">
               <a href="https://solana.com/solana-whitepaper.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-black underline">
                 whitepaper
-              </a>
-              <a href="https://x.com/i/communities/1994913381581484366" target="_blank" rel="noopener noreferrer" className="hover:text-black underline">
-                community
               </a>
               <Link href="/docs" className="hover:text-black underline">
                 docs

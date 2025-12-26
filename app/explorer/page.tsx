@@ -17,10 +17,16 @@ export default function ExplorerPage() {
   const fetchPublicFiles = async () => {
     try {
       const response = await fetch('/api/explorer');
+      if (!response.ok) {
+        console.error('Failed to fetch files');
+        setFiles([]);
+        return;
+      }
       const data = await response.json();
       setFiles(data.files || []);
     } catch (error) {
       console.error('Error fetching public files:', error);
+      setFiles([]);
     } finally {
       setLoading(false);
     }

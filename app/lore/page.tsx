@@ -152,22 +152,15 @@ export default function LorePage() {
                 <p className="font-bold mb-1">solana whitepaper</p>
                 <p className="text-gray-600 text-sm">read the original document</p>
               </a>
-              <a 
-                href="https://x.com/i/communities/1994913381581484366" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="sketch-border bg-white p-4 hover:bg-gray-50 transition"
-              >
-                <p className="font-bold mb-1">twitter community</p>
-                <p className="text-gray-600 text-sm">join the discussion</p>
-              </a>
+              <div className="sketch-border bg-gray-50 p-4">
+                <p className="font-bold mb-1">community</p>
+                <p className="text-gray-400 text-sm">coming soon</p>
+              </div>
             </div>
             
-            <div className="mt-6 sketch-border bg-white p-4">
+            <div className="mt-6 sketch-border bg-gray-50 p-4">
               <p className="text-gray-600 text-sm mb-1">contract address</p>
-              <p className="font-mono text-sm break-all">
-                M35pQqnEQJzTAz6x8JUzuQpAWCggKdkxQj7MbkHpump
-              </p>
+              <p className="text-gray-400 text-sm">coming soon</p>
             </div>
           </div>
 

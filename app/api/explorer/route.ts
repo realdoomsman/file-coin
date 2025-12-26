@@ -1,8 +1,15 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
+    // Check if Supabase is configured
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      return NextResponse.json({ files: [], message: 'Database not configured' });
+    }
+
     const { data: files, error } = await supabase
       .from('files')
       .select('*')
@@ -10,11 +17,14 @@ export async function GET() {
       .order('created_at', { ascending: false })
       .limit(100);
 
-    if (error) throw error;
+    if (error) {
+      console.error('Supabase error:', error);
+      return NextResponse.json({ files: [], error: error.message });
+    }
 
     return NextResponse.json({ files: files || [] });
   } catch (error) {
     console.error('Error fetching public files:', error);
-    return NextResponse.json({ error: 'Failed to fetch files' }, { status: 500 });
+    return NextResponse.json({ files: [], error: 'Failed to fetch files' });
   }
 }
