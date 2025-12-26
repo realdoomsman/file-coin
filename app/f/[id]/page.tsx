@@ -61,7 +61,7 @@ export default function FilePage() {
       <main className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-3xl font-bold mb-4 font-caveat">file not found</h1>
-          <p className="text-gray-600 mb-6">this file doesn't exist or has been removed.</p>
+          <p className="text-gray-600 mb-6">this file does not exist or has been removed.</p>
           <button
             onClick={() => router.push('/upload')}
             className="btn-sketch"
@@ -89,6 +89,7 @@ export default function FilePage() {
         {/* Image Preview */}
         {isImage && (
           <div className="sketch-border bg-white p-4 mb-6">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src={file.url} 
               alt={file.original_filename}
