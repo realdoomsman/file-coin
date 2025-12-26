@@ -62,10 +62,10 @@ export async function POST(request: NextRequest) {
         continue;
       }
 
-      // Skip transactions older than 10 minutes
+      // Skip transactions older than 30 minutes
       const txTime = sig.blockTime ? sig.blockTime * 1000 : 0;
-      const tenMinutesAgo = Date.now() - 10 * 60 * 1000;
-      if (txTime && txTime < tenMinutesAgo) {
+      const thirtyMinutesAgo = Date.now() - 30 * 60 * 1000;
+      if (txTime && txTime < thirtyMinutesAgo) {
         continue;
       }
 
@@ -135,7 +135,14 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    return NextResponse.json({ confirmed: false });
+    return NextResponse.json({ 
+      confirmed: false,
+      debug: {
+        paymentWallet: PAYMENT_WALLET,
+        senderWallet,
+        transactionsFound: signatures.length,
+      }
+    });
   } catch (error) {
     console.error('Payment check error:', error);
     return NextResponse.json({ confirmed: false, error: 'Failed to check payment' });
