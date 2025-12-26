@@ -91,7 +91,10 @@ export async function POST(request: NextRequest) {
         upsert: false,
       });
 
-    if (uploadError) throw uploadError;
+    if (uploadError) {
+      console.error('Storage upload error:', uploadError);
+      return NextResponse.json({ error: `Storage error: ${uploadError.message}` }, { status: 500 });
+    }
 
     // Get public URL
     const { data: urlData } = supabase.storage.from('files').getPublicUrl(fileName);
@@ -110,7 +113,10 @@ export async function POST(request: NextRequest) {
       .select()
       .single();
 
-    if (fileError) throw fileError;
+    if (fileError) {
+      console.error('Database insert error:', fileError);
+      return NextResponse.json({ error: `Database error: ${fileError.message}` }, { status: 500 });
+    }
 
     // Update user's total storage used (only for wallet users)
     if (walletAddress && user) {
