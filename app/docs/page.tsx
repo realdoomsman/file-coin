@@ -87,7 +87,7 @@ export default function DocsPage() {
               <div className="space-y-3">
                 <div className="flex gap-3">
                   <span className="text-[#b39700]">1.</span>
-                  <p>toggle "mint as nft" when uploading</p>
+                  <p>toggle &quot;mint as nft&quot; when uploading</p>
                 </div>
                 <div className="flex gap-3">
                   <span className="text-[#b39700]">2.</span>
@@ -99,7 +99,7 @@ export default function DocsPage() {
                 </div>
                 <div className="flex gap-3">
                   <span className="text-[#b39700]">4.</span>
-                  <p>click "i sent the sol" and wait for minting</p>
+                  <p>click &quot;i sent the sol&quot; and wait for minting</p>
                 </div>
               </div>
               <div className="bg-[#fff9e0] p-3 border-2 border-[#e6c200] rounded mt-4">
