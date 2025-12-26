@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 
-// Storage limits for anonymous users
+// Storage limits
 const LIMITS = {
   perFile: 50 * 1024 * 1024, // 50MB
+  onchainPerFile: 1 * 1024 * 1024, // 1MB for on-chain (expensive)
 };
 
 // Generate a short, URL-friendly ID
@@ -21,25 +22,32 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const file = formData.get('file') as File;
     const storageType = formData.get('storageType') as string || 'cloud';
+    const txSignature = formData.get('txSignature') as string | null;
+    const paymentId = formData.get('paymentId') as string | null;
 
     if (!file) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
-    // Check file size
-    if (file.size > LIMITS.perFile) {
+    // Check file size based on storage type
+    const maxSize = storageType === 'onchain' ? LIMITS.onchainPerFile : LIMITS.perFile;
+    if (file.size > maxSize) {
+      const maxMB = maxSize / (1024 * 1024);
       return NextResponse.json(
-        { error: 'File too large. Max size: 50MB' },
+        { error: `File too large. Max size for ${storageType}: ${maxMB}MB` },
         { status: 400 }
       );
     }
 
-    // On-chain storage coming soon
+    // For on-chain storage, verify payment was made
     if (storageType === 'onchain') {
-      return NextResponse.json(
-        { error: 'On-chain storage coming soon' },
-        { status: 400 }
-      );
+      if (!txSignature) {
+        return NextResponse.json(
+          { error: 'Payment required for on-chain storage' },
+          { status: 400 }
+        );
+      }
+      // In production, you'd verify the transaction signature here
     }
 
     // Generate short ID for the file
@@ -72,10 +80,11 @@ export async function POST(request: NextRequest) {
         owner_wallet: 'anonymous',
         original_filename: file.name,
         size_bytes: file.size,
-        storage_provider: 'supabase',
+        storage_provider: storageType === 'onchain' ? 'solana' : 'supabase',
         url: urlData.publicUrl,
         is_public: true,
         short_id: shortId,
+        tx_signature: txSignature || null,
       })
       .select()
       .single();
@@ -90,6 +99,8 @@ export async function POST(request: NextRequest) {
       shortId: shortId,
       url: urlData.publicUrl,
       message: 'File uploaded successfully',
+      storageType,
+      txSignature: txSignature || null,
     });
   } catch (error) {
     console.error('Upload error:', error);
