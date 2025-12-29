@@ -130,46 +130,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Storage Tiers */}
-      <section className="max-w-4xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold mb-6 text-center font-caveat">storage tiers</h2>
-        <p className="text-center text-gray-600 mb-10">
-          everyone gets free storage. holders get more.
-        </p>
-        
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="sketch-border bg-white p-6">
-            <h3 className="text-xl font-bold mb-1">free</h3>
-            <p className="text-gray-500 text-sm mb-4">no wallet needed</p>
-            <ul className="space-y-2 text-gray-700">
-              <li>200MB total storage</li>
-              <li>50MB per file</li>
-              <li>public sharing</li>
-            </ul>
-          </div>
-          
-          <div className="sketch-border-yellow p-6">
-            <h3 className="text-xl font-bold mb-1">holder</h3>
-            <p className="text-gray-600 text-sm mb-4">hold $FILE tokens</p>
-            <ul className="space-y-2">
-              <li>1GB total storage</li>
-              <li>200MB per file</li>
-              <li>private files</li>
-            </ul>
-          </div>
-          
-          <div className="sketch-border bg-white p-6">
-            <h3 className="text-xl font-bold mb-1">whale</h3>
-            <p className="text-gray-500 text-sm mb-4">major holder</p>
-            <ul className="space-y-2 text-gray-700">
-              <li>5GB total storage</li>
-              <li>500MB per file</li>
-              <li>priority support</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
       {/* CTA */}
       <section className="max-w-3xl mx-auto px-6 py-20 text-center">
         <h2 className="text-3xl font-bold mb-4 font-caveat">ready to try it?</h2>
