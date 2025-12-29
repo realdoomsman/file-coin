@@ -209,11 +209,17 @@ export default function UploadPage() {
               </svg>
             </div>
             <h2 className="text-2xl font-bold mb-2 font-caveat">nft minted!</h2>
-            <p className="text-gray-600 mb-6">your file is now an nft in your wallet</p>
+            <p className="text-gray-600 mb-4">your file is now an nft in your wallet</p>
+            
+            <div className="bg-[#fff9e0] p-3 border-2 border-[#e6c200] rounded mb-6 text-left">
+              <p className="text-sm text-gray-700">
+                dont see it in phantom? check your hidden activity - new nfts sometimes get flagged as spam.
+              </p>
+            </div>
             
             <div className="space-y-4 text-left">
               <div className="bg-gray-50 p-3 border-2 border-gray-200 rounded">
-                <p className="text-xs text-gray-500 mb-1">mint address</p>
+                <p className="text-xs text-gray-500 mb-1">nft</p>
                 <a 
                   href={`https://solscan.io/token/${mintResult.mintAddress}`}
                   target="_blank"
@@ -224,26 +230,26 @@ export default function UploadPage() {
                 </a>
               </div>
               <div className="bg-gray-50 p-3 border-2 border-gray-200 rounded">
-                <p className="text-xs text-gray-500 mb-1">mint transaction</p>
+                <p className="text-xs text-gray-500 mb-1">transaction</p>
                 <a 
                   href={`https://solscan.io/tx/${mintResult.txSignature}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-mono text-sm text-blue-600 underline break-all"
                 >
-                  view on solscan
+                  {mintResult.txSignature.slice(0, 20)}...{mintResult.txSignature.slice(-20)}
                 </a>
               </div>
               {paymentTxSignature && (
                 <div className="bg-gray-50 p-3 border-2 border-gray-200 rounded">
-                  <p className="text-xs text-gray-500 mb-1">payment transaction</p>
+                  <p className="text-xs text-gray-500 mb-1">payment</p>
                   <a 
                     href={`https://solscan.io/tx/${paymentTxSignature}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-mono text-sm text-blue-600 underline break-all"
                   >
-                    view on solscan
+                    {paymentTxSignature.slice(0, 20)}...{paymentTxSignature.slice(-20)}
                   </a>
                 </div>
               )}
