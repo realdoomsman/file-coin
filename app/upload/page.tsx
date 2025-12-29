@@ -6,7 +6,7 @@ import { formatBytes } from '@/lib/utils';
 
 // Payment wallet for NFT minting
 const PAYMENT_WALLET = process.env.NEXT_PUBLIC_PAYMENT_WALLET || 'YOUR_SOLANA_WALLET_ADDRESS';
-const MINT_PRICE = 0.01; // SOL
+const MINT_PRICE = 0.02; // SOL
 
 export default function UploadPage() {
   const router = useRouter();
