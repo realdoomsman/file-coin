@@ -16,7 +16,7 @@ export default function ExplorerPage() {
 
   const fetchPublicFiles = async () => {
     try {
-      const response = await fetch('/api/explorer');
+      const response = await fetch(`/api/explorer?t=${Date.now()}`);
       if (!response.ok) {
         console.error('Failed to fetch files');
         setFiles([]);

@@ -23,9 +23,17 @@ export async function GET() {
       return NextResponse.json({ files: [], error: error.message });
     }
 
-    return NextResponse.json({ files: files || [] });
+    return NextResponse.json({ files: files || [] }, {
+      headers: {
+        'Cache-Control': 'no-store, max-age=0',
+      },
+    });
   } catch (error) {
     console.error('Error fetching public files:', error);
-    return NextResponse.json({ files: [], error: 'Failed to fetch files' });
+    return NextResponse.json({ files: [], error: 'Failed to fetch files' }, {
+      headers: {
+        'Cache-Control': 'no-store, max-age=0',
+      },
+    });
   }
 }
