@@ -56,7 +56,14 @@ export default function Home() {
           >
             community
           </a>
-          <span className="font-mono text-xs text-gray-400">CA - soon</span>
+          <a 
+            href="https://pump.fun/coin/2r289rknaXNtiRaqwMrgg8iTD2c3uT6hJspNcn86pump" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="font-mono text-xs hover:text-black transition underline"
+          >
+            CA: 2r289rknaXNtiRaqwMrgg8iTD2c3uT6hJspNcn86pump
+          </a>
         </div>
       </section>
 
