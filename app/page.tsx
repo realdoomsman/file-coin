@@ -41,7 +41,7 @@ export default function Home() {
             whitepaper proof
           </a>
           <a 
-            href="https://x.com/i/communities/2005455614583988287" 
+            href="https://x.com/FileCoinfun" 
             target="_blank" 
             rel="noopener noreferrer" 
             className="hover:text-black transition underline"

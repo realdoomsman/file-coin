@@ -31,7 +31,7 @@ export default function Navbar() {
 
           <div className="flex items-center gap-4">
             <a 
-              href="https://x.com/i/communities/2005455614583988287" 
+              href="https://x.com/FileCoinfun" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-black hover:text-[#b39700] transition"
@@ -67,7 +67,7 @@ export default function Navbar() {
               <Link href="/explorer" className="text-lg" onClick={() => setMobileMenuOpen(false)}>explorer</Link>
               <Link href="/docs" className="text-lg" onClick={() => setMobileMenuOpen(false)}>docs</Link>
               <a 
-                href="https://x.com/i/communities/2005455614583988287" 
+                href="https://x.com/FileCoinfun" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-lg"
