@@ -46,6 +46,14 @@ export default function Home() {
             rel="noopener noreferrer" 
             className="hover:text-black transition underline"
           >
+            twitter
+          </a>
+          <a 
+            href="https://x.com/i/communities/2005466624078250179" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="hover:text-black transition underline"
+          >
             community
           </a>
           <span className="font-mono text-xs text-gray-400">CA - soon</span>
