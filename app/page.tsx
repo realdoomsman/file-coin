@@ -40,7 +40,14 @@ export default function Home() {
           >
             whitepaper proof
           </a>
-          <span className="text-gray-400">community - soon</span>
+          <a 
+            href="https://x.com/i/communities/2005455614583988287" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="hover:text-black transition underline"
+          >
+            community
+          </a>
           <span className="font-mono text-xs text-gray-400">CA - soon</span>
         </div>
       </section>
